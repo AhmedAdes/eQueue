@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import { AppComponent } from './app.component';
 import { ContentLayoutComponent } from './layouts/content/content-layout.component';
 import { FullLayoutComponent } from './layouts/full/full-layout.component';
@@ -17,7 +21,9 @@ import * as $ from 'jquery';
 import { MaterialModule } from 'app/material.module';
 
 
-
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+  }
 
 
 @NgModule({
@@ -33,8 +39,16 @@ import { MaterialModule } from 'app/material.module';
         BrowserAnimationsModule,
         AppRoutingModule,
         SharedModule,
+        HttpClientModule,
         // MaterialModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+              }
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent]

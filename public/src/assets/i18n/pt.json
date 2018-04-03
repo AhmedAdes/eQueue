@@ -1,0 +1,26 @@
+{
+  "Dashboard": "painel de controle",
+
+  "Company Structure": "Estrutura da companhia",
+    "Company": "Empresa",
+    "Departments": "Departamentos",
+    "Branches": "Ramos",
+    "Users": "Comercial",
+
+  "Queue": "Fila",
+    "Main Queue": "Fila Principal",
+    "Queue History": "Histórico de Filas",
+    "Queue Schedule": "Horário da Fila",
+
+  "Main Display": "Exibição principal",
+
+  "Issue new Ticket": "Emitir novo Bilhete",
+  "Active Tickets": "Bilhetes Ativos",
+  "Tickets History": "História des Bilhetes",
+
+  "ChangeLog": "ChangeLog",
+  "Login": "Entrar",
+  "Documentation": "Documentação",
+  "Support": "Apoio, suporte"
+
+}

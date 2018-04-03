@@ -29,6 +29,9 @@
 
 // List Group
 .list-group-item{
+    &:hover{
+        z-index: 0;
+    }
     &.active, 
     &.active:focus,
     &.active:hover{
@@ -60,7 +63,7 @@
     }
 }
 .media{
-    img{
+    img, iframe{
         margin-right: 1rem !important;
     }
     .media-body + a{
