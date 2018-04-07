@@ -1,45 +1,75 @@
 <!-- Customer Dashboard -->
 <div>
-  <div class="jumbotron">
-    <h2>Book New Ticket</h2>
-    <p>Start using the app for your benefits and book a new ticket now</p>
-    <a class="btn btn-raised btn-lg btn-primary" [routerLink]="['/home/customer/issue']">Issue Ticket...</a>
-  </div>
   <div matchHeight="card" class="row">
     <div class="col">
-      <div class="card bg-secondary text-center">
+      <div class="card gradient-pomegranate">
         <div class="card-body">
-          <div class="card-title">
-            <h4>Current Active Tickets</h4>
+          <div class="card-block pt-2 pb-0">
+            <div class="media">
+              <div class="media-body white text-left">
+                <h3 class="font-large-2 mb-0">3</h3>
+                <span>Active Tickets</span>
+              </div>
+              <div class="media-right white text-right">
+                <i class="icon-book-open font-large-1"></i>
+              </div>
+            </div>
           </div>
-          <div class="font-large-2">3</div>
-          <a class="btn btn-raised btn-lg btn-primary" [routerLink]="['/home/customer/actv']">Active Tickets</a>
+        </div>
+        <div class="card-footer pt-2 pb-0">
+          <a class="btn btn-outline-info btn-round btn-block" [routerLink]="['/home/customer/actv']">Active Tickets</a>
         </div>
       </div>
     </div>
     <div class="col">
-      <div class="card bg-info text-center">
+      <div class="card gradient-ibiza-sunset">
         <div class="card-body">
-          <div class="card-title">
-            <h4>Total Tickets in Last 30 Days</h4>
+          <div class="card-block pt-2 pb-0">
+            <div class="media">
+              <div class="media-body white text-left">
+                <h3 class="font-large-2 mb-0">26</h3>
+                <span>Total Tickets in Last 30 Days</span>
+              </div>
+              <div class="media-right white text-right">
+                <i class="icon-bulb font-large-1"></i>
+              </div>
+            </div>
           </div>
-          <div class="font-large-2">26</div>
-          <a class="btn btn-raised btn-lg btn-primary" [routerLink]="['/home/customer/hstry']">View History</a>
+        </div>
+        <div class="card-footer pt-2 pb-0">
+          <a class="btn btn-outline-warning btn-round btn-block" [routerLink]="['/home/customer/hstry']">View History</a>
         </div>
       </div>
     </div>
     <div class="col">
-      <div class="card bg-success text-center">
+      <div class="card gradient-green-tea">
         <div class="card-body">
-          <div class="card-title">
-            <h4>Monthly Visit Rate</h4>
+          <div class="card-block pt-2 pb-0">
+            <div class="media">
+              <div class="media-body white text-left">
+                <h3 class="font-large-2 mb-0">0.9
+                  <em class="font-large-1">per day</em>
+                </h3>
+                <span>Monthly Visit Rate</span>
+              </div>
+              <div class="media-right white text-right">
+                <i class="icon-graph font-large-1"></i>
+              </div>
+            </div>
           </div>
-          <div class="align-middle">
-            <span class="font-large-2">0.9</span>
-            <span class="font-weight-bold">per Day</span>
-          </div>
-          <a href="" class="btn btn-raised btn-lg btn-primary">Reports</a>
         </div>
+        <div class="card-footer pt-2 pb-0">
+          <a class="btn btn-outline-success btn-round btn-block">Reports</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card py-3 px-2 gradient-blackberry">
+    <div class="card-body">
+      <div class="card-block white pt-2 pb-0">
+        <h2>Book New Ticket</h2>
+        <p>Start using the app for your benefits and book a new ticket now</p>
+        <a class="btn btn-raised btn-lg btn-round btn-success" [routerLink]="['/home/customer/issue']">Issue Ticket...</a>
       </div>
     </div>
   </div>

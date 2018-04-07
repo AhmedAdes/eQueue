@@ -6,140 +6,147 @@
   </div> -->
   <div class="row">
     <div class="col-md-12">
-      <div class="card bg-indigo bg-accent-400">
-        <div class="card-header">
-          <h3 class="card-title">Issue New Ticket</h3>
+      <div class="card">
+        <div class="mHead card-header py-1">
+          <h3 class="card-title font-weight-bold">Issue New Ticket</h3>
         </div>
-        <div class="card-body">
-          <div class="px-3" *ngIf="showForm">
+        <div class="card-body my-1">
+          <div class="row">
+            <div class="col-8">
 
-            <form class="form form-horizontal" [formGroup]="inFrm" (submit)="HandleForm(inFrm.value)" novalidate>
-              <div class="form-body">
+              <div class="px-2" *ngIf="showForm">
 
-                <div class="form-group row" [ngClass]="{ 'has-danger': submitted && comp.invalid }">
-                  <label for="selComp" class=" label-control col-md-3 col-sm-4">Provider Company</label>
-                  <div class="col-md-9 col-sm-8">
-                    <select #focus class="form-control" name="selComp" [formControl]="comp">
-                      <option value="">Select a Company ...</option>
-                      <option *ngFor="let cmp of compList" [value]="cmp.CompID">{{cmp.CompName}}</option>
-                    </select>
-                    <div class="form-text text-muted danger" *ngIf="(comp.touched || submitted) && comp.invalid">Company is required.</div>
-                  </div>
-                </div>
+                <form class="form form-horizontal" [formGroup]="inFrm" (submit)="HandleForm(inFrm.value)" novalidate>
+                  <div class="form-body">
 
-                <div class="form-group row" [ngClass]="{ 'has-danger': submitted && branch.invalid }">
-                  <label for="selBrnch" class=" label-control col-md-3 col-sm-4">Select a Branch</label>
-                  <div class="col-md-9 col-sm-8">
-                    <select class="form-control" name="selBrnch" [formControl]="branch">
-                      <option value="">Select a Branch ...</option>
-                      <option *ngFor="let brn of branchList" [value]="brn.BranchID">{{brn.BranchName}}</option>
-                    </select>
-                    <div class="form-text text-muted danger" *ngIf="(branch.touched || submitted) && branch.invalid">Branch is required.</div>
-                  </div>
-                </div>
-
-                <div class="form-group row" [ngClass]="{ 'has-danger': submitted && dept.invalid }">
-                  <label for="selDept" class=" label-control col-md-3 col-sm-4">Select a Department</label>
-                  <div class="col-md-9 col-sm-8">
-                    <select class="form-control" name="selDept" [formControl]="dept">
-                      <option value="">Select a Department ...</option>
-                      <option *ngFor="let dpt of deptList" [value]="dpt.DeptID">{{dpt.DeptName}}</option>
-                    </select>
-                    <div class="form-text text-muted danger" *ngIf="(dept.touched || submitted) && dept.invalid">Department is required.</div>
-                  </div>
-                </div>
-
-                <div class="form-group row" [ngClass]="{ 'has-danger': submitted && dept.invalid }">
-                  <label for="selDept" class=" label-control col-md-3 col-sm-4">Select Services</label>
-                  <div class="col-md-9 col-sm-8">
-                    <div class="form-control">
-                      <ul class="card-block" style="list-style: none">
-                        <div formArrayName="srvfrm">
-                          <li *ngFor="let srvc of srvfrm.controls; let idx = index" class="">
-                            <div [formGroupName]="idx">
-                              <input formControlName="checked" type="checkbox" (change)="subscribeChecked(idx, $event.target.checked)"> {{srvfrm.controls[idx].controls.ServName.value}}
-                              <div *ngIf="srvfrm.controls[idx].controls.checked.value">
-                                <div class="form-group row">
-                                  <label class="label-control col-md-4 col-sm-6">Service Count</label>
-                                  <div class="col-md-8 col-sm-6">
-                                    <input class="form-control" type="number" formControlName="ServCount">
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="label-control col-md-4 col-sm-4">Notes</label>
-                                  <div class="col-md-8 col-sm-8">
-                                    <textarea class="form-control" formControlName="Notes" cols="10" rows="2"></textarea>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        </div>
-                      </ul>
+                    <div class="form-group row" [ngClass]="{ 'has-danger': submitted && comp.invalid }">
+                      <label for="selComp" class=" label-control col-md-3 col-sm-4">Provider Company</label>
+                      <div class="col-md-9 col-sm-8">
+                        <select class="form-control" name="selComp" [formControl]="comp">
+                          <option value="">Select a Company ...</option>
+                          <option *ngFor="let cmp of compList" [value]="cmp.CompID">{{cmp.CompName}}</option>
+                        </select>
+                        <div class="form-text text-muted danger" *ngIf="(comp.touched || submitted) && comp.invalid">Company is required.</div>
+                      </div>
                     </div>
-                    <!-- <div class="form-text text-muted danger" *ngIf="(serv.touched || submitted) && serv.invalid">at least one Service is required.</div> -->
-                  </div>
-                </div>
 
-                <div class="form-group row" [ngClass]="{ 'has-danger': submitted && vDate.invalid }">
-                  <label for="visitDate" class=" label-control col-md-3 col-sm-4">Pick a Date for your visit</label>
-                  <div class="col-md-4 col-sm-8">
-                    <div class="position-relative">
-                      <!-- <input type="date" formControlName="vDate" id="visitDate" [min]="today" class="form-control"> -->
-                      <ngb-datepicker formControlName="modDate" [minDate]="today"></ngb-datepicker>
-                      <!-- <div class="form-control-position">
+                    <div class="form-group row" [ngClass]="{ 'has-danger': submitted && branch.invalid }">
+                      <label for="selBrnch" class=" label-control col-md-3 col-sm-4">Select a Branch</label>
+                      <div class="col-md-9 col-sm-8">
+                        <select class="form-control" name="selBrnch" [formControl]="branch">
+                          <option value="">Select a Branch ...</option>
+                          <option *ngFor="let brn of branchList" [value]="brn.BranchID">{{brn.BranchName}}</option>
+                        </select>
+                        <div class="form-text text-muted danger" *ngIf="(branch.touched || submitted) && branch.invalid">Branch is required.</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row" [ngClass]="{ 'has-danger': submitted && dept.invalid }">
+                      <label for="selDept" class=" label-control col-md-3 col-sm-4">Select a Department</label>
+                      <div class="col-md-9 col-sm-8">
+                        <select class="form-control" name="selDept" [formControl]="dept">
+                          <option value="">Select a Department ...</option>
+                          <option *ngFor="let dpt of deptList" [value]="dpt.DeptID">{{dpt.DeptName}}</option>
+                        </select>
+                        <div class="form-text text-muted danger" *ngIf="(dept.touched || submitted) && dept.invalid">Department is required.</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row" [ngClass]="{ 'has-danger': submitted && dept.invalid }">
+                      <label for="selDept" class=" label-control col-md-3 col-sm-4">Select Services</label>
+                      <div class="col-md-9 col-sm-8">
+                        <div class="form-control">
+                          <ul class="card-block list-group" style="list-style: none">
+                            <div formArrayName="srvfrm">
+                              <li *ngFor="let srvc of srvfrm.controls; let idx = index" class=" list-group-item">
+                                <div [formGroupName]="idx">
+                                  <input formControlName="checked" type="checkbox" (change)="subscribeChecked(idx, $event.target.checked)"> {{srvfrm.controls[idx].controls.ServName.value}}
+                                  <div *ngIf="srvfrm.controls[idx].controls.checked.value">
+                                    <div class="form-group row">
+                                      <label class="label-control col-md-4 col-sm-6">Service Count</label>
+                                      <div class="col-md-8 col-sm-6">
+                                        <input class="form-control" type="number" formControlName="ServCount">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row">
+                                      <label class="label-control col-md-4 col-sm-4">Notes</label>
+                                      <div class="col-md-8 col-sm-8">
+                                        <textarea class="form-control" formControlName="Notes" cols="10" rows="2"></textarea>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </div>
+                          </ul>
+                        </div>
+                        <!-- <div class="form-text text-muted danger" *ngIf="(serv.touched || submitted) && serv.invalid">at least one Service is required.</div> -->
+                      </div>
+                    </div>
+
+                    <div class="form-group row" [ngClass]="{ 'has-danger': submitted && vDate.invalid }">
+                      <label for="visitDate" class=" label-control col-md-3 col-sm-4">Pick a Date for your visit</label>
+                      <div class="col-md-4 col-sm-8">
+                        <div class="position-relative">
+                          <!-- <input type="date" formControlName="vDate" id="visitDate" [min]="today" class="form-control"> -->
+                          <ngb-datepicker formControlName="modDate" [minDate]="today"></ngb-datepicker>
+                          <!-- <div class="form-control-position">
                         <i class="ft-edit-2"></i>
                       </div> -->
+                        </div>
+                        <div class="form-text text-muted danger" *ngIf="(vDate.touched || submitted) && vDate.invalid">Visit Date is required.</div>
+                      </div>
                     </div>
-                    <div class="form-text text-muted danger" *ngIf="(vDate.touched || submitted) && vDate.invalid">Visit Date is required.</div>
-                  </div>
-                  <div class="col-md-5 col-sm-12 col-xs-12">
-                    <div class="alert alert-info text-center">
-                      <p>
-                        <i>Total Number of waiting customers before you</i>
-                        <br>
-                        <span *ngIf="dept.value && modDate.value">
-                          <b>{{fireCustNo}}</b>
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
 
+                  </div>
+                  <div class="form-actions center clearfix">
+                    <button type="submit" class="btn btn-lg btn-raised btn-primary">
+                      <i class="fa fa-check-square-o"></i> Issue
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div class="form-actions center clearfix">
-                <button type="submit" class="btn btn-lg btn-raised btn-primary">
-                  <i class="fa fa-check-square-o"></i> Issue
-                </button>
+              <div class="px-2" *ngIf="!showForm">
+                <form class="form form-horizontal">
+                  <div class="form-body text-center">
+                    <h2> Your Ticket No is </h2>
+                    <h2 class="display-1"> {{servNo}} </h2>
+                    <h3> Your Estimated Visit Time is </h3>
+                    <h2 class="display-1"> {{visitTime | date: 'shortTime'}} </h2>
+                    <p>Please arrive before your estimated time by around 10 minutes</p>
+                    <p>Please Remember the following number:
+                      <u class="text-danger">
+                        <b>{{uniqueNo}}</b>
+                      </u>
+                      you will be asked for it when you get served
+                    </p>
+                    <p>Total Waiting Customers Before You:
+                      <u class="text-danger">
+                        <b>{{waiting}}</b>
+                      </u>
+                    </p>
+                  </div>
+                  <div class="form-actions center clearfix">
+                    <button type="button" class="btn btn-lg btn-raised btn-primary" (click)="resetAll()">
+                      Issue another ticket
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-          <div class="px-3" *ngIf="!showForm">
-            <form class="form form-horizontal">
-              <div class="form-body text-center">
-                <h2> Your Ticket No is </h2>
-                <h2 class="display-1"> {{servNo}} </h2>
-                <h3> Your Estimated Visit Time is </h3>
-                <h2 class="display-1"> {{visitTime | date: 'shortTime'}} </h2>
-                <p>Please arrive before your estimated time by around 10 minutes</p>
-                <p>Please Remember the following number:
-                  <u class="text-danger">
-                    <b>{{uniqueNo}}</b>
-                  </u>
-                  you will be asked for it when you get served
-                </p>
-                <p>Total Waiting Customers Before You:
-                  <u class="text-danger">
-                    <b>{{waiting}}</b>
-                  </u>
-                </p>
+            </div>
+            <div class="col-4">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="alert alert-info text-center">
+                  <p>
+                    <i>Total Number of waiting customers before you</i>
+                    <br>
+                    <span *ngIf="dept.value && modDate.value">
+                      <b>{{fireCustNo}}</b>
+                    </span>
+                  </p>
+                </div>
               </div>
-              <div class="form-actions center clearfix">
-                <button type="button" class="btn btn-lg btn-raised btn-primary" (click)="resetAll()">
-                  Issue another ticket
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,26 @@
+{
+    "Dashboard": "tableau de bord",
+  
+    "Company Structure": "Structure de l'entreprise",
+      "Company": "Compagnie",
+      "Departments": "Départements",
+      "Branches": "Branches",
+      "Users": "Utilisateurs",
+  
+    "Queue": "File d'attente",
+      "Main Queue": "File d'attente Principale",
+      "Queue History": "Histoire de file d'attente",
+      "Queue Schedule": "Calendrier de file d'attente",
+  
+    "Main Display": "Affichage Principal",
+  
+    "Issue new Ticket": "Émettre un nouveau Billet",
+    "Active Tickets": "Billets Actifs",
+    "Tickets History": "Histoire des Billets",
+  
+    "Login": "Entrer",
+  
+    "ChangeLog": "ChangeLog",
+    "Documentation": "Documentation",
+    "Support": "Support"
+  }

@@ -1,0 +1,27 @@
+{
+  "Dashboard": "Instrumententafel",
+
+  "Company Structure": "Firmenstruktur",
+    "Company": "Firma",
+    "Departments": "Abteilungen",
+    "Branches": "Geäst",
+    "Users": "Benutzer",
+
+  "Queue": "Warteschlange",
+    "Main Queue": "Hauptwarteschlange",
+    "Queue History": "Warteschlangenverlauf",
+    "Queue Schedule": "Warteschlangenzeitplan",
+
+  "Main Display": "Hauptanzeige",
+
+  "Issue new Ticket": "Neues Ticket Ausgeben",
+  "Active Tickets": "Active Tickets",
+  "Tickets History": "Tickets Geschichte",
+
+  "ChangeLog": "ChangeLog",
+  "Login": "Anmeldung",
+
+  "Documentation": "Dokumentation",
+  "Support": "Unterstützung"
+
+}
