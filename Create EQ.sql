@@ -773,7 +773,7 @@ IF @TransBefore = 0
 		SELECT IDENT_CURRENT('MainQueue')AS QID;
 GO
 -----------------------------------------------------
-ALTER PROC EndDay
+CREATE PROC EndDay
 AS
 UPDATE dbo.MainQueue SET QStatus = 'Not-Attended' WHERE VisitDate < CAST(GETDATE() AS DATE) AND QStatus IN ('Waiting', 'Pending')
 UPDATE dbo.MainQueue SET QStatus = 'Served' WHERE VisitDate < CAST(GETDATE() AS DATE) AND QStatus IN ('Hold')
@@ -913,6 +913,35 @@ DECLARE @str NVARCHAR(max)=
 	BEGIN
 		SET @str += ' And qd.ServID= ' + CAST(@ServID AS VARCHAR(9))
 	END
+
+	SET @str += ' ;
+	SELECT * FROM dbo.vwAllQueueDetails WHERE QID IN (
+	SELECT q.QID 
+	FROM dbo.vwAllQueue q
+	JOIN dbo.Branch b ON b.BranchID = q.BranchID
+	JOIN dbo.Company c ON c.CompID = b.CompID
+	WHERE q.UserID = ' + CAST(@UserID AS VARCHAR(9))
+	IF (@VisitDate IS NOT NULL)
+	BEGIN
+		SET @str += ' And VisitDate=' + '''' + CONVERT(VARCHAR(12), @VisitDate) + ''''
+	END
+	IF (@CompID IS NOT NULL)
+	BEGIN
+		SET @str += ' And c.CompID= ' + CAST(@CompID AS VARCHAR(9))
+	END
+	IF (@BranchID IS NOT NULL)
+	BEGIN
+		SET @str += ' And q.BranchID= ' + CAST(@BranchID AS VARCHAR(9))
+	END
+	IF (@DeptID IS NOT NULL)
+	BEGIN
+		SET @str += ' And q.DeptID= ' + CAST(@DeptID AS VARCHAR(9))
+	END
+	IF (@ServID IS NOT NULL)
+	BEGIN
+		SET @str += ' And ServID= ' + CAST(@ServID AS VARCHAR(9))
+	END
+	SET @str += ' )'
 
 	EXEC sp_executesql @str
 GO

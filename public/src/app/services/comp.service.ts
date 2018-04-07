@@ -39,7 +39,7 @@ export class CompanyService {
         return this.http.post(this.url, { basic: comp, userID: id }, this.options).map(res => res.json());
     }
 
-    UpdateComp(company:Company) {
+    UpdateComp(company: Company) {
         return this.http.put(this.url + company.CompID, company, this.options).map(res => res.json());
     }
 }

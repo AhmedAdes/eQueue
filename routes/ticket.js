@@ -130,7 +130,12 @@ router.get("/TicketsHistory/:id/:vdate/:comp/:branc/:dept/:serv", function (req,
   request
     .execute(`SearchUserTickets`)
     .then(function (ret) {
-      res.json(ret.recordset);
+      let Que = ret.recordsets[0]
+      let Srv = ret.recordsets[1]
+      Que.forEach(q => {
+        q.Services = Srv.filter(s => s.QID == q.QID)
+      })
+      res.json(Que);
     })
     .catch(function (err) {
       res.json({

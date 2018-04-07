@@ -21,7 +21,7 @@ router.post("/", function (req, res, next) {
         res.json({
           error: ret.recordset[0].Error
         });
-        console.log(err);
+        console.log(ret.recordset[0].Error);
       } else {
         const payload = {
           admin: ret.recordset[0].UserName

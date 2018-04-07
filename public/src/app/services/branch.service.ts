@@ -26,17 +26,17 @@ export class BranchService {
     getCompBranch(compId: number) {
         return this.http.get(this.url + 'CompBranch/' + compId, this.options).map(res => res.json());
     }
-    getCompBrnchs(compId : number){
-        return this.http.get(this.url + 'GetCompBrnchs/'+compId,this.options).map(res=>res.json());        
+    getCompBrnchs(compId: number) {
+        return this.http.get(this.url + 'GetCompBrnchs/' + compId, this.options).map(res => res.json());
     }
-    getBrnchsDepts(compId : number){
-        return this.http.get(this.url + 'BrnchsDepts/'+compId,this.options).map(res=>res.json());        
+    getBrnchsDepts(compId: number) {
+        return this.http.get(this.url + 'BrnchsDepts/' + compId, this.options).map(res => res.json());
     }
-    createBranch(branch:Branch){
-        return this.http.post(this.url ,branch,this.options).map(res=>res.json());
+    createBranch(branch: Branch) {
+        return this.http.post(this.url, branch, this.options).map(res => res.json());
     }
-    updateBranch(branch:Branch){
-        return this.http.put(this.url+branch.BranchID,branch,this.options).map(res=>res.json());
+    updateBranch(branch: Branch) {
+        return this.http.put(this.url + branch.BranchID, branch, this.options).map(res => res.json());
     }
 
 }
