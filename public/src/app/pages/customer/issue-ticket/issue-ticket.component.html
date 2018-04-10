@@ -6,16 +6,14 @@
   </div> -->
   <div class="row">
     <div class="col-md-12">
-      <div class="card">
-        <div class="mHead card-header py-1">
-          <h3 class="card-title font-weight-bold">Issue New Ticket</h3>
+      <div class="card bg-info bg-accent-1">
+        <div class="card-header gradient-indigo-blue py-1">
+          <h3 class="card-title white font-weight-bold">Issue New Ticket</h3>
         </div>
         <div class="card-body my-1">
           <div class="row">
             <div class="col-8">
-
               <div class="px-2" *ngIf="showForm">
-
                 <form class="form form-horizontal" [formGroup]="inFrm" (submit)="HandleForm(inFrm.value)" novalidate>
                   <div class="form-body">
 
@@ -146,6 +144,15 @@
                   </p>
                 </div>
               </div>
+              <div>
+                <pre>{{tickets | async | json}}</pre>
+              </div>
+              <ul class="row">
+                <li *ngFor="let item of tickets | async">
+                  {{item.name}}
+                  <i class="badge badge-warning ">{{item.value}}</i>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

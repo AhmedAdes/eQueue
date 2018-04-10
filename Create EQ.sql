@@ -866,13 +866,15 @@ SELECT QID, UserID, BranchID, DeptID, ServiceNo, RequestDate, VisitDate, VisitTi
 	QStatus, ServingTime, QCurrent, QTransfer, TransferedFrom, UniqueNo, ProvUserID 
 FROM dbo.ArchiveMainQueue
 GO
-CREATE VIEW vwAllQueueDetails
+Alter VIEW vwAllQueueDetails
 AS
-SELECT QID, ServID, ServCount, Notes
-FROM dbo.QueueDetails
+SELECT QID, qd.ServID, ServName, ServCount, Notes
+FROM dbo.QueueDetails qd
+JOIN dbo.DeptServices s ON s.ServID = qd.ServID
 UNION ALL
-SELECT QID, ServID, ServCount, Notes
-FROM dbo.ArchiveQueueDetails
+SELECT QID, qd.ServID, ServName, ServCount, Notes
+FROM dbo.ArchiveQueueDetails qd
+JOIN dbo.DeptServices s ON s.ServID = qd.ServID
 GO
 -------------------------------------------------------------------------
 CREATE PROC CancelTicket 
@@ -880,7 +882,7 @@ CREATE PROC CancelTicket
 UPDATE dbo.MainQueue SET QStatus = 'Cancelled' WHERE QID=@QID
 GO
 -------------------------------------------------------------------------
-CREATE PROC SearchUserTickets
+Alter PROC SearchUserTickets
 @UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitDate DATE
 AS
 DECLARE @str NVARCHAR(max)= 
