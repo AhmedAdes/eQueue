@@ -183,6 +183,8 @@ router.post("/", function (req, res, next) {
   request.input("Email", branch.Email);
   request.input("Fax", branch.Fax);
   request.input("Disabled", branch.Disabled);
+  request.input("DefaultLang", branch.DefaultLang);
+  request.input("AudioLang", branch.AudioLang);
   request.input("BranchDepts", tvp);
   request.execute("BrnchDeptInsert").
     then(function (ret) {
@@ -195,6 +197,7 @@ router.post("/", function (req, res, next) {
 router.put("/:BranchID", function (req, res, next) {
   res.setHeader("Content-Type", "application/json");
   var branch = req.body;
+  console.log(branch)
   var tvp = new sql.Table();
   tvp.columns.add('BranchID', sql.INT);
   tvp.columns.add('DeptID', sql.INT);
@@ -215,6 +218,8 @@ router.put("/:BranchID", function (req, res, next) {
   request.input("Email", branch.Email);
   request.input("Fax", branch.Fax);
   request.input("Disabled", branch.Disabled);
+  request.input("DefaultLang", branch.DefaultLang);
+  request.input("AudioLang", branch.AudioLang);
   request.input("BranchDepts", tvp);
   request.execute("BrnchDeptUpdate").
     then(function (ret) {

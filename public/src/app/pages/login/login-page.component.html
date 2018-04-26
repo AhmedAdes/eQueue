@@ -1,29 +1,66 @@
 <!--Login Page Starts-->
-<section id="login">
-    <div class="container-fluid">
-        <div class="row full-height-vh">
-            <div class="col-12 d-flex align-items-center justify-content-center">
-                <div class="card card-inverse gradient-blackberry text-center width-400">
-                    <div class="card-img overlap">
-                        <img alt="element 06" class="mb-1" src="assets/img/portrait/avatars/avatar-08.png" width="190">
-                    </div>
-                    <div class="card-body">
-                        <div class="card-block">
-                            <h2>Login</h2>
-                            <form novalidate="" (ngSubmit)="onSubmit()" #f="ngForm">
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <input type="text" class="form-control" name="inputEmail" id="inputEmail" placeholder="User Name" ngModel required>
-                                    </div>
-                                </div>
+<section id="login ">
+  <div class="container-fluid">
+    <div class="row full-height-vh">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="col-8 ">
+          <h3 class="font-weight-bold info ">
+            <img src="../../../assets/img/queue/logo4.png" width="70px" height="50px" alt=""> e-Queuing System
+          </h3>
+          <h1 class="font-large-3 font-weight-bold white">Never Wait Again</h1>
+          <h1 class="mb-4 white">Track Your Queue Online</h1>
+          <div class="caro-card card">
+            <div class="row">
+              <div class="col-4">
+                <img src="../../../assets/img/queue/mind.png" width="120px" alt="">
+                <p>We’ve reinvented the concept of queuing with a host of features that give more control to the organization
+                  and to our customers.
+                </p>
+              </div>
+              <div class="col-4">
+                <img src="../../../assets/img/queue/time.png" width="120px" alt="">
+                <p>Our most important resource is time, and eQueuing eliminates waiting with our queue management system and
+                  appointment scheduling app.</p>
+              </div>
+              <div class="col-4">
+                <img src="../../../assets/img/queue/happy-face.png" width="120px" alt="">
+                <p>Customer satisfaction is our highest priority, and we never fail to exceed the customer’s expectations!.</p>
+              </div>
+            </div>
+            <!-- <ngb-carousel class="caro-card card">
+              <ng-template ngbSlide>
+                
+              </ng-template>
+              <ng-template ngbSlide>
+                <h1 class="ff-serif text-uppercase">First slide labe2</h1>
+              </ng-template>
+              <ng-template ngbSlide>
+                <h1 class="ff-serif text-uppercase">First slide labe3</h1>
+              </ng-template>
+            </ngb-carousel> -->
+          </div>
+        </div>
+        <div class="mr-4 col-4 log-card card white gradient-pomegranate text-center width-400">
+          <div class="card-img overlap">
+            <img alt="element 06" class="mb-1" src="../../../assets/img/queue/logo4.png" width="190">
+          </div>
+          <div class="card-body">
+            <div class="card-block">
+              <h2>Login</h2>
+              <form novalidate="" (ngSubmit)="onSubmit()" #f="ngForm">
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <input type="text" class="form-control" name="inputEmail" id="inputEmail" placeholder="User Name" ngModel required>
+                  </div>
+                </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <input type="password" class="form-control" name="inputPass" id="inputPass" placeholder="Password" ngModel required>
-                                    </div>
-                                </div>
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <input type="password" class="form-control" name="inputPass" id="inputPass" placeholder="Password" ngModel required>
+                  </div>
+                </div>
 
-                                <div class="form-group">
+                <!-- <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
@@ -33,26 +70,30 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="alert alert-danger" *ngIf="error" >
-                                    {{error}}
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-pink btn-block btn-raised">Submit</button>
-                                        <button type="button" class="btn btn-secondary btn-block btn-raised">Cancel</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="float-left"><a (click)="onForgotPassword()">Recover Password</a></div>
-                        <div class="float-right"><a (click)="onRegister()">New User?</a></div>
-                    </div>
+                                </div> -->
+                <div class="alert alert-danger" *ngIf="error">
+                  {{error}}
                 </div>
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-pink btn-block btn-raised">Login</button>
+                    <!-- <button type="button" class="btn btn-secondary btn-block btn-raised">Cancel</button> -->
+                  </div>
+                </div>
+              </form>
             </div>
+          </div>
+          <div class="card-footer">
+            <div class="float-left">
+              <a (click)="onForgotPassword()">Recover Password</a>
+            </div>
+            <div class="float-right">
+              <a routerLink ="/register" (click)="onRegister()">New User?</a>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 <!--Login Page Ends-->

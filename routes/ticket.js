@@ -205,7 +205,7 @@ router.put("/updateQCount", function (req, res, next) {
   console.log(tkt)
   firebase
     .database()
-    .ref("MainQueue/" + tkt.QID)
+    .ref("MainQueue/" + tkt.BranchID + "/" + + tkt.QID)
     .update({
       CallCount: tkt.CallCount
     });
@@ -314,13 +314,13 @@ router.put("/updateTicket/:id", function (req, res, next) {
           if (ticket.QTransfer == false) {
             firebase
               .database()
-              .ref("MainQueue/" + ticket.lastCurQ)
+              .ref("MainQueue/" + ticket.BranchID + "/" + ticket.lastCurQ)
               .update({
                 QStatus: 'Pending'
               });
             firebase
               .database()
-              .ref("MainQueue/" + ticket.QID)
+              .ref("MainQueue/" + ticket.BranchID + "/" + ticket.QID)
               .update({
                 QStatus: ticket.QStatus,
                 ProvUserID: ticket.ProvUserID,
@@ -329,30 +329,32 @@ router.put("/updateTicket/:id", function (req, res, next) {
               });
             firebase
               .database()
-              .ref("MainQueue/" + ticket.FirstPendQ)
+              .ref("MainQueue/" + ticket.BranchID + "/" + ticket.FirstPendQ)
               .update({
                 QStatus: 'NotAttended'
               })
           } else {
+            // firebase
+            //   .database()
+            //   .ref("MainQueue/" + ticket.BranchID + "/" + ticket.lastCurQ)
+            //   .update({
+            //     QStatus: 'NotAttended'
+            //   });
             firebase
               .database()
-              .ref("MainQueue/" + ticket.lastCurQ)
-              .update({
-                QStatus: 'NotAttended'
-              });
-            firebase
-              .database()
-              .ref("MainQueue/" + ticket.QID)
+              .ref("MainQueue/" + ticket.BranchID + "/" + ticket.QID)
               .update({
                 QStatus: ticket.QStatus,
-                ProvUserID: ticket.ProvUserID
+                ProvUserID: ticket.ProvUserID,
+                ProvWindow: ticket.ProvWindow,
+                CallCount: ticket.CallCount
               });
           };
           break;
         default:
           firebase
             .database()
-            .ref("MainQueue/" + ticket.QID)
+            .ref("MainQueue/" + ticket.BranchID + "/" + ticket.QID)
             .update({
               QStatus: ticket.QStatus,
               ProvUserID: ticket.ProvUserID
@@ -395,7 +397,7 @@ router.put("/transferTicket", function (req, res, next) {
       let qid = ret.recordset[0].QID
       firebase
         .database()
-        .ref("MainQueue/" + qid)
+        .ref("MainQueue/" + ticket.BranchID + "/" +  qid)
         .set({
           QID: qid,
           VisitDate: ticket.VisitDate,

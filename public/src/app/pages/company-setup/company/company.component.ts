@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CompanyService, UserService, AuthGuard, AuthenticationService } from 'app/services';
 import { Countries } from 'app/Models/countries';
-import { Languages, WorkFields, User, Company } from 'app/Models';
+import { WorkFields, User, Company } from 'app/Models';
 import { Input } from '@angular/core';
 
 
@@ -19,7 +19,6 @@ export class CompanyComponent implements OnInit {
     company = new Company();
     countries = Countries;
     cities: any[] = [];
-    languages = Languages;
     workfields = WorkFields;
     form: FormGroup;
     spinner: boolean = true;
@@ -61,7 +60,6 @@ export class CompanyComponent implements OnInit {
             Fax: [''],
             Description: [''],
             WorkField: ['', Validators.required],
-            DefaultLanguage: ['', Validators.required],
             MaxPend:['']
         });
         this.Country.valueChanges.subscribe(val => {
@@ -123,8 +121,7 @@ export class CompanyComponent implements OnInit {
         this.company.Email = this.Email.value;
         this.company.Fax = this.Fax.value;
         this.company.Description = this.Description.value;
-        this.company.WorkField = this.WorkField.value;
-        this.company.DefaultLanguage = this.DefaultLanguage.value;
+        this.company.WorkField = this.WorkField.value;        
         this.company.Disabled = false;
         this.company.MaxPend = this.MaxPend.value as number;        
     }
@@ -139,6 +136,5 @@ export class CompanyComponent implements OnInit {
     get Fax() { return this.form.get('Fax'); }
     get Description() { return this.form.get('Description'); }
     get WorkField() { return this.form.get('WorkField'); }
-    get DefaultLanguage() { return this.form.get('DefaultLanguage'); }
     get MaxPend() { return this.form.get('MaxPend'); }
 }

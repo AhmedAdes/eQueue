@@ -1,29 +1,52 @@
-<div class="row">
-  <div class="col-lg-6 col-md-6">
-    <iframe class="my-1 mx-0" width="600" height="600" src="https://www.youtube.com/embed/RKe96PMgvnw?rel=0&autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1&mute=1"
-      frameborder="0"></iframe>
+<div class="main container-fluid gradient-light-blue-indigo">
+  <div class="row pt-2">
+    <div class="col-2">
+      <img src="../../../../assets/img/logos/cma.png" height="100px" width="150px">
+    </div>
+    <div class="col-6 text-center">
+      <strong>
+        <h1 class="font-large-2 white font-weight-bold">Welcome To
+          <span style="color:red">CMA</span>
+          <span style="color:darkblue"> CGM</span>
+        </h1>
+      </strong>
+    </div>
+    <div class="col-4 text-right white ">
+      <h1 class="font-large-3 font-weight-bold">{{date | date:'mediumDate'}} </h1>
+    </div>
   </div>
-  <div class="col-lg-6 col-md-6">
-    <div class="row">
-      <div *ngFor="let dept of departments" class="px-1 col-lg-12 col-md-12">
-        <div class="card my-1 mx-0">
-          <div class="py-0 card-header white bg-success">
-            <h3 class="py-0 my-0 text-center">{{dept.DeptName}} </h3>
-          </div>
-          <div class="border-info py-0 card-body">
-            <table class="table">
+  <div class="row" style="min-height:500px;">
+    <div class="col-lg-6 col-md-6 px-0 mx-0">
+      <div class="embed-responsive my-0" style="position: relative;padding-bottom: 50%;padding-top: 29px;height:100%;">
+        <iframe class="video embed-responsive-item" src="https://www.youtube.com/embed/RKe96PMgvnw?rel=0&autoplay=1&showinfo=0&controls=0&loop=0&enablejsapi=1&mute=1"
+          frameborder="0" allowfullscreen seamless></iframe>
+      </div>
+      <!-- <video width="320" height="240" controls>
+        <source src="https://www.youtube.com/embed/RKe96PMgvnw?rel=0&autoplay=1&showinfo=0&controls=0&loop=1&enablejsapi=1&mute=1"
+          type="video/mp4">
+      </video> -->
+
+    </div>
+    <div class="col-lg-6 col-md-6 pl-1 py-0">
+      <div class="card mx-0 my-0 px-0 py-0 gradient-light-blue-indigo">
+        <div *ngFor="let dept of departments" class="mx-0 my-0 px-0 py-0 col-lg-12 col-md-12">
+
+          <div class="border-success py-0 card-body ">
+            <table class="table py-2">
               <thead>
-                <tr class="bg-info d-flex">
-                  <th class="py-0 font-medium-1 text-bold-500 text-center col-4">Ticket</th>
-                  <th class="py-0 font-medium-1 text-bold-500 text-center col-4">Window</th>
-                  <th class="py-0 font-medium-1 text-bold-500 text-center col-4">Services</th>
+                <tr class="white d-flex gradient-strawberry">
+                  <th class="py-1 font-large-1 text-bold-500 text-left col-3">{{dept.DeptName}} </th>
+                  <th class="py-1 font-medium-2 text-bold-500 text-center col-3">Ticket</th>
+                  <th class="py-1 font-medium-2 text-bold-500 text-center col-3">Window</th>
+                  <th class="py-1 font-medium-2 text-bold-500 text-center col-3">Services</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let tck of dept.tickets" class="d-flex">
-                  <td class="font-large-1 text-center col-4 py-1">{{tck.ServiceNo}}</td>
-                  <td class="font-large-1 text-center col-4 py-1">{{tck.ProvWindow}}</td>
-                  <td class="font-large-1 text-center col-4 py-1">12</td>
+                <tr *ngFor="let tck of dept.tickets" class="d-flex py-0 my-0 ">
+                  <td class="col-1"></td>
+                  <td class="font-large-2 text-right col-5 py-0">{{tck.ServiceNo}}</td>
+                  <td class="font-large-2 text-center col-3 py-0">{{tck.ProvWindow}}</td>
+                  <td class="font-large-2 text-center col-3 py-0">12</td>
                 </tr>
               </tbody>
             </table>
@@ -31,5 +54,7 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
   </div>
 </div>

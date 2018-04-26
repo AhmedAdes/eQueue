@@ -51,7 +51,7 @@ var brnc = require("./routes/branch.js");
 var dept = require("./routes/department.js");
 var srvc = require("./routes/service.js");
 var tckt = require("./routes/ticket.js");
-// var audio = require("./routes/audio.js");
+var audio = require("./routes/audio.js");
 
 app.use("/", index);
 app.use("/api/auth", login);
@@ -61,7 +61,7 @@ app.use("/api/brnc", brnc);
 app.use("/api/dept", dept);
 app.use("/api/srvc", srvc);
 app.use("/api/tckt", tckt);
-// app.use("/api/aud", audio);
+app.use("/api/aud", audio);
 
 let daycron = require('./scripts/dayCrons.js')
 daycron.scdul.start()

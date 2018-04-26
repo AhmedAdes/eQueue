@@ -1,46 +1,60 @@
-label{
-  font-weight: bold;
-  color: black;
-  font-size: 12px;
+
+label {
+  // font-weight: bold;
+  color: white;
+  font-size: 16px;
   letter-spacing: 0cm;
   text-transform: none;
+  text-align: left;
 }
-.form-section{
+
+.form-section {
   color: green;
   font-size: 18px;
 }
-.panel-heading{
+
+.panel-heading {
   color: green;
   font-size: 14px;
   font-weight: bold;
   padding: 2px;
 }
-.badge{
-  background-color:lightseagreen;
+
+.badge {
+  background-color: lightseagreen;
   color: white;
   margin: 2px;
   padding: 5px;
 }
-.selected{
+
+.selected {
   background-color: slateblue;
 }
-.ft{
-  color: white;  
+
+.ft {
+  color: white;
   cursor: pointer;
 }
 
-.list-group-item{
+.list-group-item {
   cursor: pointer;
 }
-select ,textarea,input{
+
+select,
+textarea,
+input {
   color: blue;
 }
-.card{
+
+.card {
   font-size: 14px;
+  background: rgba(223, 63, 63, 0.555);
 }
-h2{
+
+h2 {
   color: green;
 }
+
 .wrapper .content-header {
   font-weight: 500;
   letter-spacing: 0.5px;

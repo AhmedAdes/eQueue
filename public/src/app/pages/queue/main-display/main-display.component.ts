@@ -25,7 +25,7 @@ export class MainDisplayComponent implements OnInit {
   curPlayTickets;
   playedTickets = [];
   audFiles = [];
-  audReady = true;
+  date = new Date();
   audio = new Audio()
   audioContx = new AudioContext();
   constructor(public db: AngularFireDatabase, private srvAuth: AuthenticationService,
@@ -34,7 +34,6 @@ export class MainDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.srvDept.getBranchDepts(this.currentUser.bID)
       .subscribe(res => {
         this.departments = res;
@@ -46,47 +45,48 @@ export class MainDisplayComponent implements OnInit {
           this.departments.map(d => {
             d.tickets = data.filter(x => x.QStatus == 'Current' && x.DeptID == d.DeptID);
           })
-          
           // setInterval(() => {
           //   console.log('loza' + this.curTickets.length + this.audReady)            
-          //   this.startPlay();
+          //   
           // }, 1000)
         })
       })
+    setInterval(() => {
+      if (this.curTickets.length)
+        //console.log(this.curTickets)
+        this.startPlay();
+    }, 2000)
   }
   startPlay() {
-    if (this.curTickets.length > 0 && this.audio.paused && this.audReady) {
-      let ready = this.audReady;
+    if (this.curTickets.length > 0 && this.audio.paused) {
       if (this.curTickets.length == 0) {
-        this.audReady = true;
         return;
       }
-
-      this.audReady = false;
-      let serviceNo = this.curTickets.shift();
-      console.log(serviceNo)
-      let audplay = this.srvAud.playAud([serviceNo]).subscribe(res => {
+      //      this.curTickets[0].ServiceNo = "0412-D"
+      this.srvAud.playAud({ ticket: [this.curTickets[0]], audioLang: this.currentUser.uAL }).subscribe(res => {
+        let curServ = this.curTickets.shift()
         let url = URL.createObjectURL(res.blob());
+
         this.audio.src = url;
         this.audio.play().then(() => {
-          let index = this.curTickets.findIndex(f => f.QID == serviceNo.QID)
-          if (index == -1) {
-            this.curTickets.push(serviceNo)
-          } else {
-            this.curTickets.fill(serviceNo, index, index + 1)
+          if (curServ != undefined) {
+            let index = this.playedTickets.findIndex(f => f.QID == curServ.QID)
+            if (index == -1) {
+              this.playedTickets.push(curServ)
+            } else {
+              this.playedTickets.fill(curServ, index, index + 1)
+            }
           }
-
         })
         this.audio.addEventListener('ended', function () {
           this.pause();
-          ready = true;
         }, true)
       })
     }
   }
   observQueueList() {
-    this.tickets = this.db.list('MainQueue',
-      ref => ref.orderByChild('BranchID').equalTo(this.currentUser.bID.toString())
+    this.tickets = this.db.list('MainQueue/' + this.currentUser.bID.toString(),
+      ref => ref.orderByChild('QID')
     ).valueChanges().map(tks => {
       return tks.filter((tkt) => {
         if (tkt['VisitDate'] == hf.handleDate(new Date())) {

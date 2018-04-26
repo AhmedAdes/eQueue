@@ -9,6 +9,8 @@ router.use(function (req, res, next) {
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers["authorization"];
   var secret = req.body.salt || req.query.salt || req.headers["salt"];
+  console.log(token)
+  console.log(secret)
   // decode token
   if (token) {
     // verifies secret and checks exp
@@ -116,7 +118,6 @@ router.post("/", function (req, res, next) {
   request.input("Fax", comp.Fax);
   request.input("Description", comp.Description);
   request.input("WorkField", comp.WorkField);
-  request.input("DefaultLanguage", comp.DefaultLanguage);
   request.input("Disabled", comp.Disabled);
   request.input("MaxPend", comp.MaxPend);
 
@@ -146,7 +147,6 @@ router.put('/:id', function (req, res, next) {
   request.input("Fax", comp.Fax);
   request.input("Description", comp.Description);
   request.input("WorkField", comp.WorkField);
-  request.input("DefaultLanguage", comp.DefaultLanguage);
   request.input("MaxPend", comp.MaxPend);
   
   request.execute("CompanyUpdate")

@@ -21,8 +21,8 @@ router.post("/", function (req, res, next) {
         res.json({
           error: ret.recordset[0].Error
         });
-        console.log(err);
-      } else {
+        console.log(ret.recordset[0].Error);
+      } else {        
         const payload = {
           admin: ret.recordset[0].UserName
         };
@@ -40,5 +40,31 @@ router.post("/", function (req, res, next) {
     }
   });
 });
+router.post("/register", function (req, res, next) {
+  res.setHeader("Content-Type", "application/json");
+  var user = req.body;
+  var request = new sql.Request(sqlcon);
+  request.input("CompID", null);
+  request.input("BranchID", null);
+  request.input("UserName", user.UserName);
+  request.input("UserPass", user.UserPass);
+  request.input("UserRole", 'CompAdmin');
+  request.input("EntityType", user.EntityType);
+  request.input("ManagerID", null);
+  request.input("Phone", user.Phone);
+  request.input("Mobile", user.Mobile);
+  request.input("Email", user.Email);
+  request.input("Title", user.Title);
+  request.input("Disabled", false);
 
+  request.execute("RegisterUser")
+    .then(function (ret) {
+      res.json(ret);
+    })
+    .catch(function (err) {
+      res.json({
+        error: err
+      });
+    })
+})
 module.exports = router;

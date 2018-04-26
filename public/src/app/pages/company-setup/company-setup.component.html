@@ -1,23 +1,19 @@
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/assets/css/riliwan-rabo.css" />
-<link rel="stylesheet" href="/assets/css/style.css" />
-<link rel="stylesheet" href="/assets/css/form.css" />
 
-<section style="background:#efefe9;">
+<section>
+  <div class="container">
+    <div class="board">
+      <!-- Navigation Area (Circular Tabs) -->
+      <msw-navbar></msw-navbar>
+      <!-- End Navigation Area (Circular Tabs) -->
 
-    <div class="container">
-        <div class="board">
-            <!-- Navigation Area (Circular Tabs) -->
-            <msw-navbar></msw-navbar>
-            <!-- End Navigation Area (Circular Tabs) -->
-
-            <!-- Content Area -->       
-            <div class="tab-content">
-                <!-- Nested view  -->
-                <router-outlet></router-outlet>
-            </div>
-            <!-- End Content Area -->
-        </div>
-
+      <!-- Content Area -->
+      <div class="tab-content">
+        <!-- Nested view  -->
+        <router-outlet></router-outlet>
+      </div>
+      <!-- End Content Area -->
     </div>
+  </div>
 </section>

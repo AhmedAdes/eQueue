@@ -48,8 +48,8 @@ export class MainQueueComponent implements OnInit {
   }
 
   observQueueList() {
-    this.tickets = this.db.list('MainQueue',
-      ref => ref.orderByChild('BranchID').equalTo(this.currentUser.bID.toString())
+    this.tickets = this.db.list('MainQueue/' + this.currentUser.bID.toString(),
+      ref => ref.orderByChild('QID')
     ).valueChanges().map(tks => {
       return tks.filter((tkt) => {
         if (tkt['VisitDate'] == hf.handleDate(new Date())) {
@@ -138,8 +138,10 @@ export class MainQueueComponent implements OnInit {
             this.sTk.ProvUserID = this.currentUser.uID;
             this.sTk.QStatus = 'Current';
             this.sTk.ProvWindow = this.currentUser.uWD;
+            this.sTk.CallCount = 1;            
             this.sTk.QCurrent = true;
             this.sTk.Qtask = action;
+            console.log(this.sTk)
             if (this.getLastCurQ()) this.sTk.lastCurQ = this.getLastCurQ().QID;// Get Last Current Q tt Not Served if any            
             this.srvTkts.updateTicket(this.sTk.QID, this.sTk).subscribe();
           } else {
@@ -232,13 +234,13 @@ export class MainQueueComponent implements OnInit {
     return false;
   }
   getLastCurQ() {
-    return this.sTkts.find(x => x.QStatus == 'Current' && x.ProvUserID == this.currentUser.uID);
+    return this.sTkts.find(x => x.QStatus == 'Current' && x.ProvUserID == this.currentUser.uID && x.DeptID == this.sDept.DeptID);
   }
   getFirstPend() {
     let pend, curr, revTkts: any[];
 
-    pend = this.sTkts.findIndex(x => x.QStatus == 'Pending') // Return first Pending Index
-    curr = this.sTkts.findIndex(x => x.QStatus == 'Current')  // Return first Current Index    
+    pend = this.sTkts.findIndex(x => x.QStatus == 'Pending' && x.DeptID == this.sDept.DeptID) // Return first Pending Index
+    curr = this.sTkts.findIndex(x => x.QStatus == 'Current' && x.DeptID == this.sDept.DeptID)  // Return first Current Index    
     console.log(pend, curr)
     if (pend > -1) {
       if (curr > (pend + this.maxPend)) {

@@ -1,0 +1,41 @@
+.liner {
+  background: rgba(253, 253, 253, 0.658);
+}
+
+.round-tabs {
+  background-color: rgba(7, 171, 212, 0.507);
+}
+
+li {
+  cursor: pointer;
+  background-color: rgba(38, 32, 73, 0.322);
+}
+
+span>i {
+  color: gray;
+}
+
+.is-active {
+  background-color: rgba(44, 8, 245, 0.384);
+  color: white;
+}
+
+.not-active {
+  background-color: rgba(206, 63, 94, 0.596);
+  color: white;
+}
+
+.is-active>span>i {
+  font-size: 35px;
+  color: white;
+}
+
+.not-active>span>i {
+  color: white;
+  font-size: 25px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}

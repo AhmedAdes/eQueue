@@ -1,54 +1,44 @@
 <div class="board-inner" id="status-buttons">
-    <ul class="nav nav-tabs" id="myTab">
-        <div class="liner"></div>
+  <ul class="nav nav-tabs" id="myTab">
+    <!-- <div class="liner"></div> -->
 
-        <!-- circular user icon -->
-        <li>
-            <a routerLinkActive="active" routerLink="companies" data-toggle="tab" title="Companies">
-                <span class="round-tabs one ">
-                    <i class="icon-home"></i>
-                </span>
-            </a>
-        </li>
+    <!-- circular user icon -->
+    <li [routerLinkActive]="['is-active']" routerLink="companies" data-toggle="tab" title="Companies">
+      <span class="round-tabs one">
+        <i class="icon-home"></i>
+      </span>
+    </li>
 
-        <!-- circular tasks icon -->
-        <li>
-            <a routerLinkActive="active" routerLink="departments" data-toggle="tab" title="Departments">
-                <span class="round-tabs two">
-                    <i class="icon-layers"></i>
-                </span>
-            </a>
-        </li>
+    <!-- circular tasks icon -->
+    <li [routerLinkActive]="['is-active']" routerLink="departments" data-toggle="tab" title="Departments">
+      <span class="round-tabs two">
+        <i class="icon-layers"></i>
+      </span>
+    </li>
 
-        <!-- circular home icon -->
-        <li>
-            <a routerLinkActive="active" routerLink="branches" data-toggle="tab" title="Branches">
-                <span class="round-tabs three">
-                    <i class="icon-grid"></i>
-                </span>
-            </a>
-        </li>
+    <!-- circular home icon -->
+    <li [routerLinkActive]="['is-active']" routerLink="branches" data-toggle="tab" title="Branches">
+      <span class="round-tabs three">
+        <i class="icon-grid"></i>
+      </span>
+    </li>
 
-        <!-- circular home icon -->
-        <li>
-            <a routerLinkActive="active" routerLink="users" data-toggle="tab" title="Users">
-                <span class="round-tabs four">
-                    <i class="ft-users"></i>
-                </span>
-            </a>
-        </li>
+    <!-- circular home icon -->
+    <li [routerLinkActive]="['is-active']" routerLink="users" data-toggle="tab" title="Users">
+      <span class="round-tabs four">
+        <i class="ft-users"></i>
+      </span>
+    </li>
 
-        <!-- circular ok icon -->
-        <li>
-            <a routerLinkActive="active" routerLink="conclusion" data-toggle="tab" title="completed">
-                <span class="round-tabs five">
-                    <i class="icon-like"></i>
-                </span>
-            </a>
-        </li>
+    <!-- circular ok icon -->
+    <li [routerLinkActive]="['is-active']" routerLink="conclusion" data-toggle="tab" title="completed">
+      <span class="round-tabs five">
+        <i class="icon-like"></i>
+      </span>
+    </li>
 
-    </ul>
-    <div class="clearfix"></div>
+  </ul>
+  <!-- <div class="clearfix"></div> -->
 </div>
 
 <!-- Close the Splash screen -->

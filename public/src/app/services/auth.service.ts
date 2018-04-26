@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { User, CurrentUser } from '../Models/user';
-import { UserRoles, CompanyTypes, NodeUrl } from '../Models/BasicObjects';
+import { UserRoles, CompanyTypes, NodeUrl, Languages, CompanySetup } from '../Models/BasicObjects';
 import 'rxjs/add/operator/map'
 
 @Injectable()
@@ -22,7 +22,6 @@ export class AuthenticationService {
     login(user: any) {
         return this.http.post(NodeUrl + 'auth', user, this.options)
             .map((response: Response) => {
-                // console.log(response.json())
                 const arrRet = response.json();
                 if (arrRet.error) {
                     return { login: false, error: arrRet.error }
@@ -50,7 +49,9 @@ export class AuthenticationService {
                     this.currentUser = {
                         uID: arrRet.user[0].UserID, uName: arrRet.user[0].UserName, uRl: this.getRole(arrRet.user[0].UserRole),
                         etyp: arrRet.user[0].EntityType, tkn: token, slt: arrRet.salt, photo: photo,
-                        cID: arrRet.user[0].CompID, bID: arrRet.user[0].BranchID, uWD: arrRet.user[0].Window
+                        cID: arrRet.user[0].CompID, bID: arrRet.user[0].BranchID, uWD: arrRet.user[0].Window,
+                        uDL: this.getLang(arrRet.user[0].DefaultLang), uAL: this.getLang(arrRet.user[0].AudioLang),
+                        cSet: this.getCompSetup(arrRet.user[0].CompanySetup)
                     }
 
                     // store username and jwt token in local storage to keep user logged in between page refreshes
@@ -63,7 +64,9 @@ export class AuthenticationService {
                 }
             });
     }
-
+    register(user: User) {
+        return this.http.post(NodeUrl + 'auth/' + 'register/', user).map(res => res.json());
+    }
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;
@@ -71,11 +74,27 @@ export class AuthenticationService {
         this.currentUser = null;
         localStorage.removeItem('currentUser');
     }
-
     getRole(job: string): number {
         const uRoles = UserRoles
         const ret = uRoles.find(obj => obj.name === job).class;
         return ret;
+    }
+    getCompSetup(compSetup: number) {
+        if (compSetup != null) {
+            const CompSetup = CompanySetup
+            const ret = CompSetup.find(c => c.class == compSetup).name;
+            return ret;
+        }
+        else {
+            return null;
+        }
+    }
+    getLang(lang): string {
+        const languages = Languages;
+        if (lang != null)
+            return languages.find(l => l.name === lang).domain;
+        else
+            return languages.find(l => l.name === 'English').domain;
     }
     getType(typ: number): string {
         const Types = CompanyTypes

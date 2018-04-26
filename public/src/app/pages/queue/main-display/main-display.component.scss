@@ -1,4 +1,14 @@
-.card{
-    min-height: 100px;
-    min-width:  150px;
+.card {
+  min-height: 100px;
+  min-width: 150px;
+}
+
+iframe[seamless] {
+  background-color: transparent;
+  border: 0px none transparent;
+  padding: 0px;
+  overflow: hidden;
+}
+.main{
+ // background: rgba(49, 112, 228, 0.507);  
 }

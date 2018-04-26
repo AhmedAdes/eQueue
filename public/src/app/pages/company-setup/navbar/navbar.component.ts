@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
+import { AuthenticationService } from 'app/services';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -7,6 +9,14 @@ import { Component } from '@angular/core';
     styleUrls: ['./navbar.component.scss']
 })
 
-export class NavbarComponent {
-        
+export class NavbarComponent implements OnInit {
+    setup; active; currComp;
+
+    constructor(private srvAuth: AuthenticationService, private route: ActivatedRoute) {
+        this.setup = this.srvAuth.currentUser.cSet;
+    }
+    ngOnInit() {
+        this.currComp = this.route.children[0].routeConfig.path;
+        console.log(this.currComp)
+    }
 }

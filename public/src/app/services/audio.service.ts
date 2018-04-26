@@ -17,7 +17,7 @@ export class AudioService {
 
     constructor(private http: Http, private authService: AuthenticationService) { }
 
-    playAud(tickets) {
-        return this.http.post(this.url + 'audio/', tickets, this.options);
+    playAud(object) {
+        return this.http.post(this.url + 'audio/', object, this.options);
     }
 }

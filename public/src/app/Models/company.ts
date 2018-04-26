@@ -13,15 +13,15 @@ export class Company {
   Fax: string;
   Description: string;
   WorkField: string;
-  DefaultLanguage: string;
   Disabled: boolean;
-  MaxPend:number= 0;
+  MaxPend: number = 0;
 }
 export class Branch {
   BranchID: number;
   BranchName: string;
   CompID: number;
   Country: string;
+  CountryAbv: string;  
   City: string;
   BranchAddress: string;
   Phone: string;
@@ -29,6 +29,8 @@ export class Branch {
   Email: string;
   Fax: string;
   Disabled: boolean;
+  DefaultLang: string;
+  AudioLang: string;
   Departments: any[] = [];
   Users: any[] = [];
 }

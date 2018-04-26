@@ -6,9 +6,8 @@ import { FormDataService } from '../data/formData.service';
 import { WorkflowService } from "../workflow/workflow.service";
 import { STEPS } from "../workflow/workflow.model";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Department, Branch } from 'app/Models';
+import { Department, Branch, Languages } from 'app/Models';
 import { CompanyService, AuthenticationService, DepartmentService, BranchService } from 'app/services';
-
 
 @Component({
     selector: 'mt-wizard-branches',
@@ -20,11 +19,12 @@ export class BranchesComponent implements OnInit {
     form: any;
     @Input() companyId = 0;
     countries = Countries;
-    cities :any[]=[];
+    cities: any[] = [];
     currentDepartments: any[] = [];
     departments: Department[] = [];// for the select control
     branches: Branch[] = [];
     branch = new Branch();
+    languages = Languages;
     constructor(private router: Router,
         private route: ActivatedRoute, private formDataService: FormDataService,
         private workflowService: WorkflowService, private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class BranchesComponent implements OnInit {
                     this.getAllDepts();
                     this.getAllBranches();
                 });
-            
+
         }
     }
     getAllBranches() {
@@ -82,7 +82,9 @@ export class BranchesComponent implements OnInit {
             ],
             Fax: ['', Validators.required],
             Departments: this.fb.array([], Validators.required),
-            Disabled: ['']
+            Disabled: [''],
+            DefaultLang: ['', Validators.required],
+            AudioLang: ['', Validators.required]
         });
         this.Country.valueChanges.subscribe(val => {
             this.onCountryChange(val);
@@ -92,8 +94,7 @@ export class BranchesComponent implements OnInit {
         if (!val) return
         this.srvComp.getCountryCities(val)
             .subscribe(res => {
-                this.cities = res;               
-                console.log(this.cities);
+                this.cities = res;
             })
     }
     SetDepartments(departments: any[]) {
@@ -115,7 +116,7 @@ export class BranchesComponent implements OnInit {
     assignBranchValue() {
         this.branch.BranchName = this.BranchName.value;
         this.branch.CompID = this.CompID.value;
-        this.branch.Country = this.countries.find(c=>c.code == this.Country.value).name;
+        this.branch.Country = this.countries.find(c => c.code == this.Country.value).name;
         this.branch.City = this.City.value;
         this.branch.BranchAddress = this.BranchAddress.value;
         this.branch.Phone = this.Phone.value;
@@ -124,13 +125,16 @@ export class BranchesComponent implements OnInit {
         this.branch.Fax = this.Fax.value;
         this.branch.Departments = this.branch.Departments;
         this.branch.Disabled = this.Disabled.value;
+        this.branch.DefaultLang = this.DefaultLang.value;
+        this.branch.AudioLang = this.AudioLang.value;
     }
     OnBranchSelect(branch: Branch) {
         this.Reset();
         this.branch = branch;
-        this.branch.Country = this.countries.find(c=>c.name == branch.Country).code;
+        if (this.branch.Country.length > 2)
+            this.branch.Country = this.countries.find(c => c.name == branch.Country).code;
         this.SetDepartments(this.branch.Departments);
-        this.form.patchValue(this.branch);        
+        this.form.patchValue(this.branch);
     }
     OnSubmit() {
         this.assignBranchValue();
@@ -162,8 +166,8 @@ export class BranchesComponent implements OnInit {
     next() {
         this.router.navigateByUrl('/out/companySetup/users', { relativeTo: this.route.parent, skipLocationChange: true });
     }
-    previous(){
-        this.router.navigateByUrl('/out/companySetup/departments', { relativeTo: this.route.parent, skipLocationChange: true });        
+    previous() {
+        this.router.navigateByUrl('/out/companySetup/departments', { relativeTo: this.route.parent, skipLocationChange: true });
     }
     get BranchName() { return this.form.get('BranchName'); }
     get CompID() { return this.form.get('CompID'); }
@@ -176,4 +180,6 @@ export class BranchesComponent implements OnInit {
     get Fax() { return this.form.get('Fax'); }
     get Departments() { return this.form.get('Departments') as FormArray; }
     get Disabled() { return this.form.get('Disabled'); }
+    get DefaultLang() { return this.form.get('DefaultLang') }
+    get AudioLang() { return this.form.get('AudioLang') }
 }

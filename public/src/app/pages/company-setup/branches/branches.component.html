@@ -1,147 +1,167 @@
 <!-- Branch Component Starts -->
 <div>
-    <div class="row">
-        <div class='col-xs-12 col-sm-12 col-md-8'>
-            <form *ngIf="!spinner" [formGroup]="form" class="editForm" (ngSubmit)="OnSubmit()">
-                <div class="card form-body">
-                    <div class="alert alert-info" role="alert">
-                        <div class='col-md-offset-1 col-md-10'>
-                            <h3>
-                                <i class="ft-user"></i> Branch Info</h3>
-                        </div>
-                    </div>
-
-                    <div class='col-sm-offset-1 col-10'>
-                        <div class="form-group">
-                            <label class="form-control-label" for="BranchName">Branch Name</label>
-                            <input class="form-control input-md" formControlName="BranchName" id="BranchName" type="text" placeholder="Branch Name">
-                            <small class="form-text text-muted danger" *ngIf="!BranchName.valid && (BranchName.dirty || BranchName.touched)">
-                                <div *ngIf="BranchName.errors.required">Branch Name is required. </div>
-                                <div *ngIf="BranchName.errors.minlength">Branch must be at least 3 Characters. </div>
-                            </small>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="Country">Country</label>
-                                <select class="form-control input-md" formControlName="Country" id="Country">
-                                    <option value>Select Country</option>
-                                    <option *ngFor="let Country of countries" [value]="Country.code">{{Country.name}} </option>
-                                </select>
-                                <small class="form-text text-muted danger" *ngIf="!Country.valid && (Country.dirty || Country.touched)">Please select a country!</small>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="City">City</label>
-                                <select class="form-control input-md" formControlName="City" id="City" type="text">
-                                    <option value>Select City</option>
-                                    <option *ngFor="let City of cities" [value]="City.name">{{City.name}}</option>
-                                </select>
-                                <small class="form-text text-muted danger" *ngIf="!City.valid && (City.dirty || City.touched)">Please select a city!</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='col-sm-offset-1 col-10'>
-
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="Phone">Phone</label>
-                                <input class="form-control input-md" formControlName="Phone" id="Phone" type="text" placeholder="Phone">
-                                <small class="form-text text-muted danger" *ngIf="!Phone.valid && (Phone.dirty || Phone.touched)">Please select a Phone!</small>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="Fax">Fax</label>
-                                <input class="form-control input-md" formControlName="Fax" id="Fax" type="text" placeholder="Fax">
-                                <small class="form-text text-muted danger" *ngIf="!Fax.valid && (Fax.dirty || Fax.touched)">Please select a Fax!</small>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="Mobile">Mobile</label>
-                                <input class="form-control input-md" formControlName="Mobile" id="Mobile" type="text" placeholder="Mobile">
-                                <small class="form-text text-muted danger" *ngIf="!Mobile.valid && (Mobile.dirty || Mobile.touched)">Please select a Mobile!</small>
-                            </div>
-
-                            <div class="form-group col-6">
-                                <label class="form-control-label" for="Email">Email</label>
-                                <input class="form-control input-md" formControlName="Email" id="Email" type="text" placeholder="Email">
-                                <small class="form-text text-muted danger" *ngIf="!Email.valid && (Email.dirty || Email.touched)">Please select a Email!</small>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="Departments">Avilable Departments</label>
-                                <select class="form-control" multiple id="Departments">
-                                    <option *ngFor="let Department of departments" [value]="Department.DeptID" (click)="addDepartment(Department)">{{Department.DeptName}}</option>
-                                </select>
-                            </div>
-                            <div *ngIf="branch.Departments.length>0" class="panel panel-primary col-6">
-                                <div class="panel-heading">Selected Departments</div>
-                                <div class="panel-body">
-                                    <span class="badge badge-primary mr-2" *ngFor="let Department of branch.Departments" (click)="removeDepartment(Department)">{{Department.DeptName}} </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label" for="BranchAddress"> Address</label>
-                            <textarea class="form-control input-md" formControlName="BranchAddress" id="BranchAddress" type="text" placeholder="Address"></textarea>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="checkbox" formControlName="Disabled"> Disabled
-                            </label>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-raised btn-raised btn-primary" [disabled]="!form.valid" (click)="OnSubmit()">
-                                <i class="fa fa-check-square-o"></i> Save
-                            </button>
-                            <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Reset()">
-                                <i class="ft-x"></i> Cancel
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="form-actions">
-                    <div class="form-group text-center">
-                        <button type="button" class="btn btn-raised btn-secondary" [disabled]="branches.length == 0" (click)="previous()">
-                            <span style="margin-left:10px;">
-                                <i class="ft-chevron-left"></i>
-                            </span>
-                            Previous
-                        </button>
-                        <button type="button" class="btn btn-raised btn-info" [disabled]="branches.length == 0" (click)="next()">
-                            Next
-                            <span style="margin-left:10px;">
-                                <i class="ft-chevron-right"></i>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class='col-xs-12 col-sm-12 col-md-4'>
-            <div class="card">
-                <div class="alert alert-success" role="alert">
-                    <div class='col-md-offset-1 col-md-10'>
-                        <h4>Current Branches</h4>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <ul class=" list-group">
-                        <li [class.selected]="Branch.BranchID === branch.BranchID" *ngFor="let Branch of branches" class="list-group-item" (click)="OnBranchSelect(Branch)">
-                            {{Branch.BranchName}}
-                        </li>
-                    </ul>
-                </div>
+  <div class="row">
+    <div class='col-xs-12 col-sm-12 col-md-8'>
+      <form *ngIf="!spinner" [formGroup]="form" class="editForm" (ngSubmit)="OnSubmit()">
+        <div class="card form-body">
+          <div class="alert alert-info" role="alert">
+            <div class='col-md-offset-1 col-md-10'>
+              <h3>
+                <i class="ft-user"></i> Branch Info</h3>
             </div>
+          </div>
+
+          <div class='col-sm-offset-1 col-10'>
+            <div class="form-group">
+              <label class="form-control-label" for="BranchName">Branch Name</label>
+              <input class="form-control input-md" formControlName="BranchName" id="BranchName" type="text" placeholder="Branch Name">
+              <small class="form-text text-muted danger" *ngIf="!BranchName.valid && (BranchName.dirty || BranchName.touched)">
+                <div *ngIf="BranchName.errors.required">Branch Name is required. </div>
+                <div *ngIf="BranchName.errors.minlength">Branch must be at least 3 Characters. </div>
+              </small>
+            </div>
+
+            <div class="row">
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="Country">Country</label>
+                <select class="form-control input-md" formControlName="Country" id="Country">
+                  <option value>Select Country</option>
+                  <option *ngFor="let Country of countries" [value]="Country.code">{{Country.name}} </option>
+                </select>
+                <small class="form-text text-muted danger" *ngIf="!Country.valid && (Country.dirty || Country.touched)">Please select a country!</small>
+              </div>
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="City">City</label>
+                <select class="form-control input-md" formControlName="City" id="City" type="text">
+                  <option value>Select City</option>
+                  <option *ngFor="let City of cities" [value]="City.name">{{City.name}}</option>
+                </select>
+                <small class="form-text text-muted danger" *ngIf="!City.valid && (City.dirty || City.touched)">Please select a city!</small>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="DefaultLang">Default Language</label>
+                <select class="form-control input-md" formControlName="DefaultLang" id="DefaultLang">
+                  <option value>Default Language</option>
+                  <option *ngFor="let lang of languages" [value]="lang.name">{{lang.name}} </option>
+                </select>
+                <small class="form-text text-muted danger" *ngIf="!DefaultLang.valid && (DefaultLang.dirty || DefaultLang.touched)">Please select Default Language!</small>
+              </div>
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="AudioLang">Audio Language</label>
+                <select class="form-control input-md" formControlName="AudioLang" id="AudioLang" type="text">
+                  <option value>Audio Language</option>
+                  <option *ngFor="let lang of languages" [value]="lang.name">{{lang.name}}</option>
+                </select>
+                <small class="form-text text-muted danger" *ngIf="!AudioLang.valid && (AudioLang.dirty || AudioLang.touched)">Please select Audio Language!</small>
+              </div>
+            </div>
+          </div>
+
+          <div class='col-sm-offset-1 col-10'>
+
+            <div class="row">
+              <div class="form-group col-6">
+                <label class="form-control-label" for="Phone">Phone</label>
+                <input class="form-control input-md" formControlName="Phone" id="Phone" type="text" placeholder="Phone">
+                <small class="form-text text-muted danger" *ngIf="!Phone.valid && (Phone.dirty || Phone.touched)">Please select a Phone!</small>
+              </div>
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="Fax">Fax</label>
+                <input class="form-control input-md" formControlName="Fax" id="Fax" type="text" placeholder="Fax">
+                <small class="form-text text-muted danger" *ngIf="!Fax.valid && (Fax.dirty || Fax.touched)">Please select a Fax!</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label class="form-control-label" for="Mobile">Mobile</label>
+                <input class="form-control input-md" formControlName="Mobile" id="Mobile" type="text" placeholder="Mobile">
+                <small class="form-text text-muted danger" *ngIf="!Mobile.valid && (Mobile.dirty || Mobile.touched)">Please select a Mobile!</small>
+              </div>
+
+              <div class="form-group col-6">
+                <label class="form-control-label" for="Email">Email</label>
+                <input class="form-control input-md" formControlName="Email" id="Email" type="text" placeholder="Email">
+                <small class="form-text text-muted danger" *ngIf="!Email.valid && (Email.dirty || Email.touched)">Please select a Email!</small>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="Departments">Avilable Departments</label>
+                <select class="form-control" multiple id="Departments">
+                  <option *ngFor="let Department of departments" [value]="Department.DeptID" (click)="addDepartment(Department)">{{Department.DeptName}}</option>
+                </select>
+              </div>
+              <div *ngIf="branch.Departments.length>0" class="panel panel-primary col-6">
+                <div class="panel-heading">Selected Departments</div>
+                <div class="panel-body">
+                  <span class="badge badge-primary mr-2" *ngFor="let Department of branch.Departments" (click)="removeDepartment(Department)">{{Department.DeptName}} </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="BranchAddress"> Address</label>
+              <textarea class="form-control input-md" formControlName="BranchAddress" id="BranchAddress" type="text" placeholder="Address"></textarea>
+            </div>
+            <div>
+              <label>
+                <input type="checkbox" formControlName="Disabled"> Disabled
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-raised btn-raised btn-primary" [disabled]="!form.valid" (click)="OnSubmit()">
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Reset()">
+                <i class="ft-x"></i> Cancel
+              </button>
+            </div>
+          </div>
+
         </div>
+        <div class="form-actions">
+          <div class="form-group text-center">
+            <button type="button" class="btn btn-raised btn-secondary" [disabled]="branches.length == 0" (click)="previous()">
+              <span style="margin-left:10px;">
+                <i class="ft-chevron-left"></i>
+              </span>
+              Previous
+            </button>
+            <button type="button" class="btn btn-raised btn-info" [disabled]="branches.length == 0" (click)="next()">
+              Next
+              <span style="margin-left:10px;">
+                <i class="ft-chevron-right"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
+    <div class='col-xs-12 col-sm-12 col-md-4'>
+      <div class="card">
+        <div class="alert alert-success" role="alert">
+          <div class='col-md-offset-1 col-md-10'>
+            <h4>Current Branches</h4>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <ul class=" list-group">
+            <li [class.selected]="Branch.BranchID === branch.BranchID" *ngFor="let Branch of branches" class="list-group-item" (click)="OnBranchSelect(Branch)">
+              {{Branch.BranchName}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Branch Component Ends -->

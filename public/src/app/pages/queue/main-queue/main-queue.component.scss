@@ -5,22 +5,24 @@
   cursor: pointer;
 }
 
+body {
+  margin: 0;
+}
+
 .waiting {
   color: #FF4758;
   background-color: white;
-  
 }
 
 .served {
   color: #558B2F;
   background-color: white;
-  border: solid 1px  #558B2F;
+  border: solid 1px #558B2F;
 }
 
 .current {
   color: #F57F17;
-  background-color: white;  
-  
+  background-color: white;
 }
 
 .otherCurrent {
@@ -31,7 +33,6 @@
 .pending {
   color: #01579B;
   background-color: white;
-  
 }
 
 .notAttend {
@@ -42,14 +43,15 @@
 .hold {
   color: #006064;
   background-color: white;
-  border: dashed 2px #006064;      
+  border: dashed 2px #006064;
 }
 
-.Transferred{
+.Transferred {
   color: #01579B;
   background-color: white;
-  border: dashed 2px #006064;        
+  border: dashed 2px #006064;
 }
+
 .selectedQ {
   border: solid 2px;
   box-shadow: 5px 5px 5px;
@@ -60,9 +62,11 @@
   max-height: 200px;
   overflow-y: scroll;
 }
-.btn-dark{
+
+.btn-dark {
   cursor: not-allowed;
 }
-.btn-outline-dark{
-  cursor: not-allowed;  
+
+.btn-outline-dark {
+  cursor: not-allowed;
 }

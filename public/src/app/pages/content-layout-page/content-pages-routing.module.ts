@@ -6,6 +6,7 @@ import { LoginPageComponent } from '../login/login-page.component';
 
 import { AuthGuard } from 'app/services';
 import { MainDisplayComponent } from 'app/pages/queue';
+import { RegisterComponent } from 'app/register/register.component';
 
 
 const routes: Routes = [
@@ -24,10 +25,17 @@ const routes: Routes = [
     }
   },
   {
+    path: 'register',
+    component: RegisterComponent,
+    data: {
+      title: 'Register Page'
+    }
+  },
+  {
     path: 'mdisplay',
     component: MainDisplayComponent,
     data: {
-      title: 'Login Page'
+      title: 'Main Display Page'
     }
   },
   { path:'companySetup',loadChildren: '../company-setup/company-setup.module#CompanySetupModule'}
