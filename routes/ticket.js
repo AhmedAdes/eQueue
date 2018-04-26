@@ -117,7 +117,7 @@ router.get("/CheckTransQ/:id", function (req, res, next) {
       console.log(err);
     });
 });
-router.get("/TicketsHistory/:id/:vdate/:comp/:branc/:dept/:serv", function (req, res, next) {
+router.get("/TicketsHistory/:id/:fDate/:tDate/:comp/:branc/:dept/:serv", function (req, res, next) {
   res.setHeader("Content-Type", "application/json");
   var request = new sql.Request(sqlcon);
   // @UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @VisitDate DATE
@@ -126,11 +126,17 @@ router.get("/TicketsHistory/:id/:vdate/:comp/:branc/:dept/:serv", function (req,
   request.input('BranchID', req.params.branc == 'undefined' ? null : req.params.branc)
   request.input('DeptID', req.params.dept == 'undefined' ? null : req.params.dept)
   request.input('ServID', req.params.serv == 'undefined' ? null : req.params.serv)
-  request.input('VisitDate', req.params.vdate == 'undefined' ? null : req.params.vdate)
+  request.input('VisitFromDate', req.params.fDate == 'undefined' ? null : req.params.fDate)
+  request.input('VisitToDate', req.params.tDate == 'undefined' ? null : req.params.tDate)
   request
     .execute(`SearchUserTickets`)
     .then(function (ret) {
-      res.json(ret.recordset);
+      let Que = ret.recordsets[0]
+      let Srv = ret.recordsets[1]
+      Que.forEach(q => {
+        q.Services = Srv.filter(s => s.QID == q.QID)
+      })
+      res.json(Que);
     })
     .catch(function (err) {
       res.json({

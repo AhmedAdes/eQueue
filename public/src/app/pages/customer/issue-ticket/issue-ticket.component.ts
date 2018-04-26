@@ -26,7 +26,8 @@ export class IssueTicketComponent implements OnInit {
   deptList: Department[] = []
   servList: QueueService[] = []
   tickets: Observable<any>
-  fireCustNo = 0
+  fireDeptCustNo = 0
+  fireCustNo: any[]
 
   selServ: any[]
   visitDate: string
@@ -125,7 +126,8 @@ export class IssueTicketComponent implements OnInit {
       this.deptList = dp
       this.dept.setValue(null)
       this.servList = [];
-      (<FormArray>this.srvfrm).controls = []
+      (<FormArray>this.srvfrm).controls = [];
+      this.observQueueList()
       // this.onDeptChange(this.deptList[0].DeptID)
     })
   }
@@ -188,22 +190,39 @@ export class IssueTicketComponent implements OnInit {
     this.submitted = false
   }
   observQueueList() {
-    if (!this.dept.value) {
+    if (!this.branch.value) {
       return
     }
-    this.tickets = this.db.list('MainQueue/' + this.branch.value
-    ).valueChanges().map(tks => {
-      return tks.filter((tkt) => {
-        let dd = new Date(Date.UTC(this.modDate.value.year, this.modDate.value.month - 1, this.modDate.value.day))
-        if (tkt['VisitDate'] == hf.handleDate(dd)
-          && tkt['DeptID'] == this.dept.value
-          && (['Waiting', 'Current', 'Hold', 'Pending'].findIndex(c => c == tkt['QStatus']) > -1)) {
-          return true;
-        } else {
-          return false;
+    // this.db.list('MainQueue')
+    this.tickets = this.db.list('MainQueue/' + this.branch.value)
+      .valueChanges()
+      .map(tks => {
+        return tks.filter((tkt) => {
+          let dd = new Date(Date.UTC(this.modDate.value.year, this.modDate.value.month - 1, this.modDate.value.day))
+
+          if (tkt['VisitDate'] == hf.handleDate(dd)
+            // && tkt['DeptID'] == this.dept.value
+            && (['Waiting', 'Current', 'Hold', 'Pending'].findIndex(c => c == tkt['QStatus']) > -1)) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+      })
+    this.tickets.subscribe(t => {
+      // console.log(t);
+      let unique = t.map(obj => { return obj.DeptID });
+      unique = unique.filter((x, i, a) => a.indexOf(x) === i);
+
+      this.fireCustNo = unique.map(obj => {
+        return {
+          name: this.deptList.find(d => d.DeptID == obj).DeptName,
+          value: t.filter(k => k.DeptID == obj).length,
+          active: obj == this.dept.value
         }
       })
+      this.fireDeptCustNo = this.fireCustNo.find(k => k.active == true).value -1
+      // console.log(this.fireCustNo);
     })
-    this.tickets.subscribe(t => this.fireCustNo = t ? t.length : 0)
   }
 }

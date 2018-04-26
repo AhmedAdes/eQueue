@@ -8,9 +8,9 @@ import * as hf from '../helper.functions';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap/carousel/carousel-config';
 
 @Component({
-    selector: 'app-login-page',
-    templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.scss']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['./login-page.component.scss']
 })
 
 export class LoginPageComponent {
@@ -82,33 +82,5 @@ export class LoginPageComponent {
                 }
             }
         }
-
-        // checkCompanySetupState() {
-        //     let step: string;
-        //     let companyID: any;
-        //     //Check if Logged user is Company Admin  
-        //     this.srvUser.CheckCompAdmin(this.srvAuth.currentUser.uID)
-        //         .subscribe(res => {
-        //             //Get Not Completed Step. 
-        //             if (res.error) { hf.handleError(res.error); return }
-
-        //             if (res[0].UserRole !== 'CompAdmin') {
-        //                 this.router.navigate([`home/dashboard`]);
-        //             } else {
-        //                 companyID = res[0].CompID;
-        //                 if (companyID == null)
-        //                     companyID = 0;
-        //                 this.srvComp.checkCompanySetup(companyID)
-        //                     .subscribe(
-        //                     res => {
-        //                         step = this.srvWorkFlow.getLoginFirstInvalidStep(res);
-        //                         if (step != null)
-        //                             this.router.navigate([`out/companySetup/${step}`]);
-        //                         else
-        //                             this.router.navigate([`home/dashboard`]);
-        //                     });
-        //             }
-        //         });
-        // }
     }
 }

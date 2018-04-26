@@ -1,0 +1,26 @@
+{
+  "Dashboard": "Tablero",
+
+  "Company Structure": "Estructura de la empresa",
+    "Company": "Empresa",
+    "Departments": "Departamentos",
+    "Branches": "Sucursales",
+    "Users": "Usuarios",
+
+  "Queue": "Cola",
+    "Main Queue": "Cola principal",
+    "Queue History": "Historial de cola",
+    "Queue Schedule": "Horario de cola",
+
+  "Main Display": "Pantalla Principal",
+
+  "Issue new Ticket": "Emitir nuevo Boleto",
+  "Active Tickets": "Boletos Activos",
+  "Tickets History": "Historia de los Boletos",
+
+  "ChangeLog": "ChangeLog",
+  "Login": "Iniciar sesión",
+  "Documentation": "Documentación",
+  "Support": "Apoyo"
+
+}

@@ -29,3 +29,7 @@
 button:hover{
   cursor: pointer;
 }
+
+.btn-group>.btn.active{
+  z-index: 0;
+}

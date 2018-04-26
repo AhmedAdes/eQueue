@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import { HttpModule } from '@angular/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { FooterComponent } from "./footer/footer.component";
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -25,12 +26,14 @@ import { AuthenticationService } from '../services'
     StopWatchComponent,
     ToggleFullscreenDirective,
     NgbModule,
-    HttpModule
+    HttpModule,
+    TranslateModule
   ],
   imports: [
     RouterModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    TranslateModule
   ],
   declarations: [
     FooterComponent,

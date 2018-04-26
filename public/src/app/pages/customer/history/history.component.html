@@ -8,25 +8,27 @@
               Filter By:
             </h3>
             <div class="form-group row">
-              <label for="selDate" class="col-sm-3">
-                Select Date
-              </label>
-              <div class="col-sm-7">
-                <div class="input-group my-0">
+              <label for="selDate" class="control-label col-3 align-self-center">From Date</label>
+              <!-- <div class="col-sm-9"> -->
+                <div class="input-group my-0 col-9">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       <input type="checkbox" name="chkDate" id="chkDate" [(ngModel)]="chkDate">
                     </div>
                   </div>
-                  <input type="date" class="form-control" [disabled]="!chkDate" name="selDate" [(ngModel)]="selDate">
+                  <input type="date" class="form-control" [disabled]="!chkDate" name="selFDate" [(ngModel)]="selFDate">
                 </div>
-              </div>
+                <label for="selDate" class="control-label col-3 align-self-center">To Date</label>
+                <div class="col-9">
+                    <input type="date" class="form-control" [disabled]="!chkDate" name="selTDate" [(ngModel)]="selTDate">
+                </div>
+              <!-- </div> -->
             </div>
             <div class="form-group row">
               <label for="selComp" class="col-sm-3">
                 Select Company
               </label>
-              <div class="col-sm-7">
+              <div class="col-sm-9">
                 <div class="input-group my-0">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -44,7 +46,7 @@
               <label for="selBrnc" class="col-sm-3">
                 Select Branch
               </label>
-              <div class="col-sm-7">
+              <div class="col-sm-9">
                 <div class="input-group my-0">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -62,7 +64,7 @@
               <label for="selDept" class="col-sm-3">
                 Select Department
               </label>
-              <div class="col-sm-7">
+              <div class="col-sm-9">
                 <div class="input-group my-0">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -80,7 +82,7 @@
               <label for="selServ" class="col-sm-3">
                 Select Service
               </label>
-              <div class="col-sm-7">
+              <div class="col-sm-9">
                 <div class="input-group my-0">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
@@ -149,47 +151,47 @@
           </div>
           <div class="card-body">
             <!-- dl.row>dt.col-sm-3+dd.col-sm-9 -->
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Company:</dt>
               <dd class="col-sm-9">{{tModel.CompName}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Branch:</dt>
               <dd class="col-sm-9">{{tModel.BranchName}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Department:</dt>
               <dd class="col-sm-9">{{tModel.DeptName}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Booking Date:</dt>
               <dd class="col-sm-9">{{tModel.RequestDate | date: 'mediumDate'}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Visit Date:</dt>
               <dd class="col-sm-9">{{tModel.VisitDate | date: 'mediumDate'}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Ticket Status:</dt>
               <dd class="col-sm-9">{{tModel.QStatus}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Serviced By:</dt>
               <dd class="col-sm-9">{{tModel.ProvUserID}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Call Time:</dt>
               <dd class="col-sm-9">{{tModel.CallTime | date: 'shortTime'}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Service Start:</dt>
               <dd class="col-sm-9">{{tModel.StartServeDT | date: 'shortTime'}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Service End:</dt>
               <dd class="col-sm-9">{{tModel.EndServeDT | date: 'shortTime'}}</dd>
             </dl>
-            <dl class="row">
+            <dl class="row my-0">
               <dt class="col-sm-3 text-right">Services:</dt>
               <dd class="col-sm-9">
                 <table class="table table-brdered table-hover">

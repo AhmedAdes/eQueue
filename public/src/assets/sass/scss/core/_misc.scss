@@ -5,6 +5,15 @@ ul.list-inline{
   i{
     line-height: 18px;
   }
+  li{
+    display: inline-block;
+  }
+  &.list-inline-pipe{
+    >li+li:before{
+      content: ' | ';
+      color: #868e96;
+    }
+  }
 }
 
 
@@ -155,6 +164,11 @@ datetime .form-group{
 	}
 }
 
+.langimg{
+  width: 30px;
+  margin-right: 5px;
+}
+
 .notification-dropdown{
   .noti-list{
     position: relative;
@@ -184,6 +198,8 @@ datetime .form-group{
   }
 }
 
+
+
 // Checkbox css
 .custom-control-input:active ~ .custom-control-indicator {
   background-color: theme-color('primary');
@@ -193,5 +209,24 @@ datetime .form-group{
 .form-control{
   &:focus{
     border-color: theme-color('primary') !important;
+  }
+}
+
+.dragdrop-container{
+  min-height: 200px;
+}
+
+.content-overlay{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  display: block;
+  z-index: 2;
+  visibility: hidden;
+  &.show{
+    visibility: visible;
+    background-color: rgba(0,0,0,.6);
   }
 }

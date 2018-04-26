@@ -767,7 +767,7 @@ IF @TransBefore = 0
 		SELECT IDENT_CURRENT('MainQueue')AS QID;
 GO
 -----------------------------------------------------
-CREATE	 PROC EndDay
+CREATE PROC EndDay
 AS
 UPDATE dbo.MainQueue SET QStatus = 'Not-Attended' WHERE VisitDate < CAST(GETDATE() AS DATE) AND QStatus IN ('Waiting', 'Pending')
 UPDATE dbo.MainQueue SET QStatus = 'Served' WHERE VisitDate < CAST(GETDATE() AS DATE) AND QStatus IN ('Hold')
@@ -882,13 +882,15 @@ SELECT QID, UserID, BranchID, DeptID, ServiceNo, RequestDate, VisitDate, VisitTi
 	QStatus, ServingTime, QCurrent, QTransfer, TransferedFrom, UniqueNo, ProvUserID 
 FROM dbo.ArchiveMainQueue
 GO
-CREATE VIEW vwAllQueueDetails
+Alter VIEW vwAllQueueDetails
 AS
-SELECT QID, ServID, ServCount, Notes
-FROM dbo.QueueDetails
+SELECT QID, qd.ServID, ServName, ServCount, Notes
+FROM dbo.QueueDetails qd
+JOIN dbo.DeptServices s ON s.ServID = qd.ServID
 UNION ALL
-SELECT QID, ServID, ServCount, Notes
-FROM dbo.ArchiveQueueDetails
+SELECT QID, qd.ServID, ServName, ServCount, Notes
+FROM dbo.ArchiveQueueDetails qd
+JOIN dbo.DeptServices s ON s.ServID = qd.ServID
 GO
 -------------------------------------------------------------------------
 CREATE PROC CancelTicket 
@@ -896,22 +898,23 @@ CREATE PROC CancelTicket
 UPDATE dbo.MainQueue SET QStatus = 'Cancelled' WHERE QID=@QID
 GO
 -------------------------------------------------------------------------
-CREATE PROC SearchUserTickets
-@UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitDate DATE
+Alter PROC SearchUserTickets
+@UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitFromDate NvarChar(12), @VisitToDate nVarChar(12)
 AS
 DECLARE @str NVARCHAR(max)= 
 	'SELECT QID ,q.UserID, u.UserName ,q.BranchID, b.BranchName ,q.DeptID, d.DeptName ,ServiceNo ,RequestDate ,VisitDate ,VisitTime ,
 		   QStatus ,QCurrent ,QTransfer ,UniqueNo , b.BranchAddress ,c.CompID, c.CompName
 	FROM dbo.vwAllQueue q 
-	LEFT JOIN dbo.vwAllQueueDetails qd ON qd.QID = q.QID
+	--LEFT JOIN dbo.vwAllQueueDetails qd ON qd.QID = q.QID
 	JOIN dbo.Users u ON u.UserID = q.UserID
 	JOIN dbo.CompDept d ON d.DeptID = q.DeptID
 	JOIN dbo.Branch b ON b.BranchID = q.BranchID
 	JOIN dbo.Company c ON c.CompID = b.CompID
 	WHERE q.UserID = ' + CAST(@UserID AS VARCHAR(9))
-	IF (@VisitDate IS NOT NULL)
+	IF (@VisitFromDate IS NOT NULL)
 	BEGIN
-		SET @str += ' And VisitDate=' + '''' + CONVERT(VARCHAR(12), @VisitDate) + ''''
+		SET @str += ' AND Cast(VisitDate as DATE) Between ' + '''' + CONVERT(VARCHAR(12), @VisitFromDate) + '''' + 
+			' And ' + '''' + CONVERT(VARCHAR(12), @VisitToDate) + ''''
 	END
 	IF (@CompID IS NOT NULL)
 	BEGIN
@@ -929,6 +932,36 @@ DECLARE @str NVARCHAR(max)=
 	BEGIN
 		SET @str += ' And qd.ServID= ' + CAST(@ServID AS VARCHAR(9))
 	END
+
+	SET @str += ' ;
+	SELECT * FROM dbo.vwAllQueueDetails WHERE QID IN (
+	SELECT q.QID 
+	FROM dbo.vwAllQueue q
+	JOIN dbo.Branch b ON b.BranchID = q.BranchID
+	JOIN dbo.Company c ON c.CompID = b.CompID
+	WHERE q.UserID = ' + CAST(@UserID AS VARCHAR(9))
+	IF (@VisitFromDate IS NOT NULL)
+	BEGIN
+		SET @str += ' AND Cast(VisitDate as DATE) Between ' + '''' + CONVERT(VARCHAR(12), @VisitFromDate) + '''' + 
+			' And ' + '''' + CONVERT(VARCHAR(12), @VisitToDate) + ''''
+	END
+	IF (@CompID IS NOT NULL)
+	BEGIN
+		SET @str += ' And c.CompID= ' + CAST(@CompID AS VARCHAR(9))
+	END
+	IF (@BranchID IS NOT NULL)
+	BEGIN
+		SET @str += ' And q.BranchID= ' + CAST(@BranchID AS VARCHAR(9))
+	END
+	IF (@DeptID IS NOT NULL)
+	BEGIN
+		SET @str += ' And q.DeptID= ' + CAST(@DeptID AS VARCHAR(9))
+	END
+	IF (@ServID IS NOT NULL)
+	BEGIN
+		SET @str += ' And ServID= ' + CAST(@ServID AS VARCHAR(9))
+	END
+	SET @str += ' )'
 
 	EXEC sp_executesql @str
 GO

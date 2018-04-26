@@ -58,16 +58,16 @@ export const ROUTES: RouteInfo[] = [
     }
     ,
     {
-        path: '/home/customer/issue', title: 'Issue new Ticket', icon: 'ft-square', class: '',
+        path: '/home/customer/issue', title: 'Issue new Ticket', icon: 'ft-minus-square', class: '',
         badge: '', badgeClass: '', isExternalLink: false, submenu: [], disable: false
         // badge: '', badgeClass: '', isExternalLink: false, submenu: [], disable: curUser && curUser.etyp === 1
     },
     {
-        path: '/home/customer/actv', title: 'Active Tickets', icon: 'ft-square', class: '',
+        path: '/home/customer/actv', title: 'Active Tickets', icon: 'ft-bell', class: '',
         badge: '', badgeClass: '', isExternalLink: false, submenu: [], disable: curUser && curUser.etyp === 1
     },
     {
-        path: '/home/customer/hstry', title: 'Tickets History', icon: 'ft-square', class: '',
+        path: '/home/customer/hstry', title: 'Tickets History', icon: 'ft-layers', class: '',
         badge: '', badgeClass: '', isExternalLink: false, submenu: [], disable: curUser && curUser.etyp === 1
     },
     // {

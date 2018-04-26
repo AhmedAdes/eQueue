@@ -23,7 +23,6 @@ export class UserService {
         }
         return this.http.get(geturl, this.options).map(res => res.json());
     }
-    
     getUserChain(id: number) {
         return this.http.get(this.url + 'chain/' + id, this.options).map(res => res.json());
     }
@@ -33,16 +32,16 @@ export class UserService {
     getCompUsers(id: number) {
         return this.http.get(this.url + 'compUsers/' + id, this.options).map(res => res.json());
     }
-    CheckCompAdmin(id:number){
+    CheckCompAdmin(id: number) {
         return this.http.get(this.url + 'compAdm/' + id, this.options).map(res => res.json());
     }
     InsertUser(user: User) {
         return this.http.post(this.url, { basic: user }, this.options).map(res => res.json());
     }
     UpdateUser(id: number, user: User) {
-        return this.http.put(this.url + id,{ basic: user } , this.options).map(res => res.json());
+        return this.http.put(this.url + id, { basic: user }, this.options).map(res => res.json());
     }
     UpdateCompUser(id: number, user) {
-        return this.http.put(this.url +'RegUserComp/'+ id,{ basic: user } , this.options).map(res => res.json());
+        return this.http.put(this.url + 'RegUserComp/' + id, { basic: user }, this.options).map(res => res.json());
     }
 }
