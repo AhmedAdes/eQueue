@@ -13,43 +13,44 @@
             <ngb-tabset type="pills" orientation="horizontal" justify="fill" *ngIf="tickets && tickets.length > 0">
               <ngb-tab *ngFor="let tkt of tickets" [id]="tkt.QID" [title]="tkt.ServiceNo">
                 <ng-template ngbTabContent>
-                  <dl class="row">
+                  <hr class="my-0 py-0">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Company:</dt>
                     <dd class="col-sm-9">{{tkt.CompName}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Branch:</dt>
                     <dd class="col-sm-9">{{tkt.BranchName}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Department:</dt>
                     <dd class="col-sm-9">{{tkt.DeptName}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Booking Date:</dt>
                     <dd class="col-sm-9">{{tkt.reqDateChngd | date: 'mediumDate'}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Visit Date:</dt>
                     <dd class="col-sm-9">{{tkt.VisitDate | date: 'mediumDate'}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Current Visit State:</dt>
                     <dd class="col-sm-9">{{tkt.QStatus}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Estimated visit time::</dt>
                     <dd class="col-sm-9">{{tkt.visTimeChngd | date: 'shortTime'}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Ticket Unique No:</dt>
                     <dd class="col-sm-9">{{tkt.UniqueNo}}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Branch Address:</dt>
                     <dd class="col-sm-9">{{tkt.BranchAddress }}</dd>
                   </dl>
-                  <dl class="row">
+                  <dl class="row my-0">
                     <dt class="col-sm-3">Requested Services:</dt>
                     <dd class="col-sm-9">
                       <table class="table table-brdered table-hover">

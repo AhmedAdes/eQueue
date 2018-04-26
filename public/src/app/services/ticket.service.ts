@@ -22,8 +22,8 @@ export class TicketService {
     getActiveTickets(userId: number) {
         return this.http.get(this.url + 'ActiveTickets/' + userId, this.options).map(res => res.json());
     }
-    getTicketHistory(vDate, compId, branchId, deptId, servId, userId: number) {
-        return this.http.get(this.url + 'TicketsHistory/' + userId + '/' + vDate + '/' + compId
+    getTicketHistory(fDate, tDate, compId, branchId, deptId, servId, userId: number) {
+        return this.http.get(this.url + 'TicketsHistory/' + userId + '/' + fDate + '/' + tDate + '/' + compId
             + '/' + branchId + '/' + deptId + '/' + servId, this.options).map(res => res.json());
     }
     CancelTicket(QID: number) {

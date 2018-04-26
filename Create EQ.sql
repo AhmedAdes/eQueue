@@ -232,7 +232,10 @@ BEGIN
        IF(@userID IS NULL)
            SELECT 'Authentication failed. Wrong password.' AS Error
        ELSE 
-           SELECT UserID, UserName, CompID, BranchID, UserRole, EntityType, Salt ,Window FROM dbo.Users WHERE UserID = @userID
+           SELECT UserID, UserName, u.CompID, u.BranchID, UserRole, EntityType, Salt ,Window ,b.DefaultLang ,b.AudioLang 
+		   FROM dbo.Users u left join dbo.Branch b
+		   ON u.BranchID = b.BranchID 
+		   WHERE UserID = @userID
 END
 ELSE
     SELECT 'Authentication failed. User not found.' AS Error
@@ -883,21 +886,22 @@ UPDATE dbo.MainQueue SET QStatus = 'Cancelled' WHERE QID=@QID
 GO
 -------------------------------------------------------------------------
 Alter PROC SearchUserTickets
-@UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitDate DATE
+@UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitFromDate NvarChar(12), @VisitToDate nVarChar(12)
 AS
 DECLARE @str NVARCHAR(max)= 
 	'SELECT q.QID ,q.UserID, u.UserName ,q.BranchID, b.BranchName ,q.DeptID, d.DeptName ,ServiceNo ,RequestDate ,VisitDate ,VisitTime ,
 		   QStatus ,QCurrent ,QTransfer ,UniqueNo , b.BranchAddress ,c.CompID, c.CompName
 	FROM dbo.vwAllQueue q 
-	LEFT JOIN dbo.vwAllQueueDetails qd ON qd.QID = q.QID
+	--LEFT JOIN dbo.vwAllQueueDetails qd ON qd.QID = q.QID
 	JOIN dbo.Users u ON u.UserID = q.UserID
 	JOIN dbo.CompDept d ON d.DeptID = q.DeptID
 	JOIN dbo.Branch b ON b.BranchID = q.BranchID
 	JOIN dbo.Company c ON c.CompID = b.CompID
 	WHERE q.UserID = ' + CAST(@UserID AS VARCHAR(9))
-	IF (@VisitDate IS NOT NULL)
+	IF (@VisitFromDate IS NOT NULL)
 	BEGIN
-		SET @str += ' And VisitDate=' + '''' + CONVERT(VARCHAR(12), @VisitDate) + ''''
+		SET @str += ' AND Cast(VisitDate as DATE) Between ' + '''' + CONVERT(VARCHAR(12), @VisitFromDate) + '''' + 
+			' And ' + '''' + CONVERT(VARCHAR(12), @VisitToDate) + ''''
 	END
 	IF (@CompID IS NOT NULL)
 	BEGIN
@@ -923,9 +927,10 @@ DECLARE @str NVARCHAR(max)=
 	JOIN dbo.Branch b ON b.BranchID = q.BranchID
 	JOIN dbo.Company c ON c.CompID = b.CompID
 	WHERE q.UserID = ' + CAST(@UserID AS VARCHAR(9))
-	IF (@VisitDate IS NOT NULL)
+	IF (@VisitFromDate IS NOT NULL)
 	BEGIN
-		SET @str += ' And VisitDate=' + '''' + CONVERT(VARCHAR(12), @VisitDate) + ''''
+		SET @str += ' AND Cast(VisitDate as DATE) Between ' + '''' + CONVERT(VARCHAR(12), @VisitFromDate) + '''' + 
+			' And ' + '''' + CONVERT(VARCHAR(12), @VisitToDate) + ''''
 	END
 	IF (@CompID IS NOT NULL)
 	BEGIN

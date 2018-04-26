@@ -16,7 +16,8 @@ export class HistoryComponent implements OnInit {
   chkBrnc = false
   chkDept = false
   chkServ = false
-  selDate: string
+  selFDate: string
+  selTDate: string
   selComp: number
   selDept: number
   selBrnc: number
@@ -29,11 +30,12 @@ export class HistoryComponent implements OnInit {
   ticketList: Ticket[] = []
   tModel = new Ticket()
   showDetails = false
-
+  
   constructor(private srvTkt: TicketService, private auth: AuthenticationService) { }
 
   ngOnInit() {
-    this.selDate = hf.handleDate(new Date())
+    this.selFDate = hf.handleDate(new Date())
+    this.selTDate = hf.handleDate(new Date())
     this.srvTkt.getUserSrchDetails(this.currentUser.uID).subscribe(cols => {
       this.allList = cols
       this.compList = cols[0]
@@ -44,8 +46,13 @@ export class HistoryComponent implements OnInit {
     this.ViewReport()
   }
   ViewReport() {
+    if(!this.chkDate && !this.chkComp && ! this.chkBrnc && !this.chkDept && !this.chkServ){
+      hf.handleError('Please Select a Filter By Field')
+      return
+    }
     this.srvTkt.getTicketHistory(
-      this.chkDate ? this.selDate : undefined,
+      this.chkDate ? this.selFDate : undefined,
+      this.chkDate ? this.selTDate : undefined,
       this.chkComp ? this.selComp : undefined,
       this.chkBrnc ? this.selBrnc : undefined,
       this.chkDept ? this.selDept : undefined,

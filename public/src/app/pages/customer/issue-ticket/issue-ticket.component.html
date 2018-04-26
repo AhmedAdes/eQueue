@@ -60,18 +60,18 @@
                                 <div [formGroupName]="idx">
                                   <input formControlName="checked" type="checkbox" (change)="subscribeChecked(idx, $event.target.checked)"> {{srvfrm.controls[idx].controls.ServName.value}}
                                   <div *ngIf="srvfrm.controls[idx].controls.checked.value">
-                                    <div class="form-group row">
-                                      <label class="label-control col-md-4 col-sm-6">Service Count</label>
-                                      <div class="col-md-8 col-sm-6">
+                                    <div class="form-group row py-1 my-1">
+                                      <label class="label-control col-md-6 col-sm-6">Service Count</label>
+                                      <div class="col-md-6 col-sm-6">
                                         <input class="form-control" type="number" formControlName="ServCount">
                                       </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <!-- <div class="form-group row">
                                       <label class="label-control col-md-4 col-sm-4">Notes</label>
                                       <div class="col-md-8 col-sm-8">
                                         <textarea class="form-control" formControlName="Notes" cols="10" rows="2"></textarea>
                                       </div>
-                                    </div>
+                                    </div> -->
                                   </div>
                                 </div>
                               </li>
@@ -139,20 +139,21 @@
                     <i>Total Number of waiting customers before you</i>
                     <br>
                     <span *ngIf="dept.value && modDate.value">
-                      <b>{{fireCustNo}}</b>
+                      <b>{{fireDeptCustNo}}</b>
                     </span>
                   </p>
                 </div>
+                <div>
+                  <!-- <pre>{{tickets | async | json}}</pre> -->
+                </div>
+                <ul class="list-group">
+                  <caption *ngIf="fireCustNo">list of current customers</caption>
+                  <li [ngClass]="item.active? 'active':''" class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of fireCustNo">
+                    {{item.name}}
+                    <i class="badge badge-warning badge-pill">{{item.value}}</i>
+                  </li>
+                </ul>
               </div>
-              <div>
-                <pre>{{tickets | async | json}}</pre>
-              </div>
-              <ul class="row">
-                <li *ngFor="let item of tickets | async">
-                  {{item.name}}
-                  <i class="badge badge-warning ">{{item.value}}</i>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
