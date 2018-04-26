@@ -21,10 +21,9 @@ CREATE TABLE Company
 	[Description] NVARCHAR(max),
 	WorkField NVARCHAR(100), -- Shipping , FrightForwarding , etc..	
 	[Disabled] BIT DEFAULT 0,	-- for ADMIN Use Only
+	MaxPend INT,
 	CONSTRAINT PK_Company PRIMARY KEY CLUSTERED (CompID)
 )
-ALTER TABLE Company ADD MaxPend INT
-ALTER TABLE Company Drop Column DefaultLanguage
 
 CREATE TABLE Branch
 (
@@ -215,7 +214,7 @@ ALTER TABLE dbo.ArchiveQueueDetails ADD CONSTRAINT FK_ArchQueueDetails_ArchiveMa
 ALTER TABLE dbo.ArchiveQueueDetails ADD CONSTRAINT FK_ArchQueueDetails_DeptServices FOREIGN KEY (ServID) REFERENCES dbo.DeptServices(ServID)
 GO
 
-ALTER PROC AuthenticateUser
+CREATE PROC AuthenticateUser
 @LoginName NVARCHAR(50), @UserPass NVARCHAR(50) AS
 IF EXISTS (SELECT TOP 1 UserID FROM dbo.Users WHERE Email=@LoginName)
 BEGIN
@@ -259,7 +258,7 @@ VALUES  ( @CompID, @BranchID, @UserName, @UserRole, @EntityType,  @ManagerID, @P
 GO
 -------------------------------------------------------------------
 ----------------Alter CompanyInsert 
-ALTER PROC CompanyInsert
+CREATE PROC CompanyInsert
 @UserID INT,@CompName nvarchar(300),@Country nvarchar(100), @City nvarchar(100), 
 @CompType nvarchar(50),@CompAddress nvarchar(max),@Phone nvarchar(50),@Mobile nvarchar(50),
 @Website nvarchar(50),@Email nvarchar(200),@Fax nvarchar(200),@Description nvarchar(max),
@@ -280,7 +279,7 @@ WHERE UserID = @UserID;
 select IDENT_CURRENT('dbo.Company') AS CompId
 GO
 -------------------------------------------------------------------
-ALTER PROC	CompanyUpdate
+CREATE PROC	CompanyUpdate
 @CompId INT ,@CompName nvarchar(300),@Country nvarchar(100), @City nvarchar(100)
 ,@CompAddress nvarchar(max),@Phone nvarchar(50),@Mobile nvarchar(50),
 @Website nvarchar(50),@Email nvarchar(200),@Fax nvarchar(200),@Description nvarchar(max),
@@ -488,7 +487,7 @@ Create Type dbo.BranchDepts AS Table(
 )
 GO
 -----------------------------------------------------------------------
-ALTER PROC BrnchDeptInsert
+CREATE PROC BrnchDeptInsert
 @CompID INT,@BranchName nvarchar(100),@Country nvarchar(100),@City nvarchar(100),
 @BranchAddress nvarchar(100),@Phone nvarchar(50),@Mobile nvarchar(50),@Email nvarchar(200),
  @Fax nvarchar(50),@Disabled bit ,@DefaultLang nvarchar(20),@AudioLang nvarchar(20),@BranchDepts BranchDepts READONLY
@@ -510,7 +509,7 @@ Select @BrnchId as BrnchID
 End
 GO
 ---------------------------------------------------------------------------------------
-ALTER PROC BrnchDeptUpdate
+CREATE PROC BrnchDeptUpdate
 @BranchID INT,@CompID INT,@BranchName nvarchar(100),@Country nvarchar(100),@City nvarchar(100),
 @BranchAddress nvarchar(100),@Phone nvarchar(50),@Mobile nvarchar(50),@Email nvarchar(200),
  @Fax nvarchar(50),@Disabled bit,@DefaultLang nvarchar(20),@AudioLang nvarchar(20) ,@BranchDepts BranchDepts READONLY
@@ -612,7 +611,7 @@ and bd.DeptID = ud.DeptID
 GO
 -----------------------------------------------------
 -------SP Updated----------
-ALTER PROC TicketUpdate
+CREATE PROC TicketUpdate
 @QID INT ,@QStatus NVARCHAR(20),@QCurrent BIT NULL
 ,@QTransfer BIT NULL ,@ProvUserID INT ,@Qtask NVARCHAR(40),@FirstPendQ INT
 AS
@@ -725,7 +724,7 @@ SELECT @QID ;
 GO
 -----------------------------------------------------
 ---------------Transfer -----------------------------
-ALTER PROC QTransfer 
+CREATE PROC QTransfer 
 @QID INT ,@DeptID INT ,@NQTransferredFrom NVARCHAR(50),@NQTransferredBy NVARCHAR(100),
 @OQTransferredBy NVARCHAR(100) ,@OQTransferredTo NVARCHAR(50),
 @QueueDetails tpQueueDetails READONLY
@@ -808,20 +807,9 @@ JOIN dbo.DeptServices s ON s.ServID = qd.ServID
 WHERE QStatus NOT IN ('Served', 'Cancelled', 'Not-Attended', 'Transferred') 
 GO
 
-CREATE VIEW vwAllQueue
-AS
-SELECT QID, UserID, BranchID, DeptID, ServiceNo, RequestDate, VisitDate, VisitTime, StartServeDT, EndServeDT, 
-	QStatus, ServingTime, QCurrent, QTransfer, TransferedFrom, UniqueNo, ProvUserID 
-FROM dbo.MainQueue
-UNION ALL
-SELECT QID, UserID, BranchID, DeptID, ServiceNo, RequestDate, VisitDate, VisitTime, StartServeDT, EndServeDT, 
-	QStatus, ServingTime, QCurrent, QTransfer, TransferedFrom, UniqueNo, ProvUserID 
-FROM dbo.ArchiveMainQueue
-GO
-
 -------------------------------------------------------------------------
 -----------View Updated-----------------------
-ALTER VIEW vwDailyTickets 
+CREATE VIEW vwDailyTickets 
 AS
 SELECT QID ,q.UserID , cu.CompName as cCompName, u.UserName as cUserName,q.BranchID, b.BranchName ,q.DeptID, d.DeptName ,QLetter ,QNumber ,ServiceNo ,RequestDate ,VisitDate ,VisitTime 
 ,StartServeDT,EndServeDT,ServingTime,QStatus ,QCurrent ,QTransfer ,UniqueNo , b.BranchAddress ,EstUserNo ,EstServingTime ,c.CompID, c.CompName ,q.ProvUserID,p.UserName as pUserName
@@ -852,25 +840,7 @@ GO
 --------------------------------------20-1-2018--------------------------------------------
 
 -------------------------------------------------------------------------
-ALTER VIEW vwActiveTickets 
-AS
-SELECT QID ,q.UserID, u.UserName ,q.BranchID, b.BranchName ,q.DeptID, d.DeptName ,QLetter ,QNumber ,ServiceNo ,RequestDate ,VisitDate ,VisitTime ,
-       QStatus ,QCurrent ,QTransfer ,UniqueNo , b.BranchAddress ,EstUserNo ,EstServingTime ,c.CompID, c.CompName
-FROM MainQueue q 
-JOIN dbo.Users u ON u.UserID = q.UserID
-JOIN dbo.CompDept d ON d.DeptID = q.DeptID
-JOIN dbo.Branch b ON b.BranchID = q.BranchID
-JOIN dbo.Company c ON c.CompID = b.CompID
-WHERE QStatus NOT IN ('Served', 'Cancelled', 'Not-Attended', 'Transferred') 
-GO
 
-ALTER VIEW vwActiveTicketsServices
-AS
-SELECT q.QID, q.UserID, qd.ServID, s.ServName, qd.ServCount, qd.Notes 
-FROM MainQueue q 
-JOIN dbo.QueueDetails qd ON qd.QID = q.QID
-JOIN dbo.DeptServices s ON s.ServID = qd.ServID
-GO
 -------------------------------------------------------------------------
 CREATE VIEW vwAllQueue
 AS
@@ -882,7 +852,7 @@ SELECT QID, UserID, BranchID, DeptID, ServiceNo, RequestDate, VisitDate, VisitTi
 	QStatus, ServingTime, QCurrent, QTransfer, TransferedFrom, UniqueNo, ProvUserID 
 FROM dbo.ArchiveMainQueue
 GO
-Alter VIEW vwAllQueueDetails
+CREATE VIEW vwAllQueueDetails
 AS
 SELECT QID, qd.ServID, ServName, ServCount, Notes
 FROM dbo.QueueDetails qd
@@ -898,7 +868,7 @@ CREATE PROC CancelTicket
 UPDATE dbo.MainQueue SET QStatus = 'Cancelled' WHERE QID=@QID
 GO
 -------------------------------------------------------------------------
-Alter PROC SearchUserTickets
+CREATE PROC SearchUserTickets
 @UserID INT, @CompID INT, @BranchID INT, @DeptID INT, @ServID INT, @VisitFromDate NvarChar(12), @VisitToDate nVarChar(12)
 AS
 DECLARE @str NVARCHAR(max)= 
